@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.finalproject.viewController;
-import co.edu.uniquindio.poo.finalproject.model.Plataforma;
+import co.edu.uniquindio.poo.finalproject.controller.ControladorUsuario;
+import co.edu.uniquindio.poo.finalproject.model.Admin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.StackPane;
@@ -16,7 +17,7 @@ public class PlataformaViewController extends ViewController{
     }
 
     public void inicializarPlataforma() {
-        if (Plataforma.getInstance().isSuperUsuario()) {
+        if (ControladorUsuario.getInstance().getUsuarioActual() instanceof Admin) {
             adminPanel.setVisible(true);
             adminPanel.setManaged(true);
             clientPanel.setVisible(false);

@@ -1,7 +1,5 @@
 package co.edu.uniquindio.poo.finalproject.viewController;
-import co.edu.uniquindio.poo.finalproject.controller.AutenticacionUsuarioProxy;
 import co.edu.uniquindio.poo.finalproject.controller.ControladorUsuario;
-import co.edu.uniquindio.poo.finalproject.model.Plataforma;
 import co.edu.uniquindio.poo.finalproject.model.TipoUsuario;
 import co.edu.uniquindio.poo.finalproject.model.Usuario;
 import co.edu.uniquindio.poo.finalproject.model.UsuarioFactory;
@@ -36,9 +34,7 @@ public class UsuarioViewController extends ViewController {
         String pass = txtPassword.getText();
         Usuario usuarioGuardado = ControladorUsuario.getInstance().obtenerUsuario(id, pass);
         if (usuarioGuardado != null) {
-            Plataforma.getInstance().setUsuarioActual(usuarioGuardado);
-            AutenticacionUsuarioProxy proxy = new AutenticacionUsuarioProxy(usuarioGuardado);
-            proxy.concederPermisos();
+            ControladorUsuario.getInstance().setUsuarioActual(usuarioGuardado);
             crearVista("/co/edu/uniquindio/poo/finalproject/PlataformaView.fxml","Menu Principal",event);
         } else {
             mostrarAlerta("No se encuentra ningun usuario creado en el sistema");

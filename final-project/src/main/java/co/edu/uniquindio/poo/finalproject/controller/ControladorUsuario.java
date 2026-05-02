@@ -7,6 +7,7 @@ public class ControladorUsuario {
     private static ControladorUsuario instance;
     private final ObservableList<Usuario> listaClientes = FXCollections.observableArrayList();
     private final ObservableList<Usuario> listaAdmins = FXCollections.observableArrayList();
+    private Usuario usuarioActual;
 
     public static ControladorUsuario getInstance(){
         if (instance == null){
@@ -17,8 +18,10 @@ public class ControladorUsuario {
     public void registrarUsuario(Usuario usuario){
         if(usuario.getTipoUsuario() == TipoUsuario.ADMIN){
             listaAdmins.add(usuario);
+            usuarioActual = usuario;
             return;
         }
+        usuarioActual = usuario;
         listaClientes.add(usuario);
     }
 
@@ -49,5 +52,13 @@ public class ControladorUsuario {
             return true;
         }
         return false;
+    }
+
+    public Usuario getUsuarioActual() {
+        return usuarioActual;
+    }
+
+    public void setUsuarioActual(Usuario usuarioActual) {
+        this.usuarioActual = usuarioActual;
     }
 }

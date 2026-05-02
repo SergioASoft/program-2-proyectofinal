@@ -1,7 +1,6 @@
 package co.edu.uniquindio.poo.finalproject.viewController;
 
 import co.edu.uniquindio.poo.finalproject.controller.ControladorUsuario;
-import co.edu.uniquindio.poo.finalproject.model.Plataforma;
 import co.edu.uniquindio.poo.finalproject.model.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,7 +14,7 @@ public class PerfilViewController extends ViewController{
         cargarInformacionUsuario();
     }
     private void cargarInformacionUsuario(){
-        Usuario usuario = Plataforma.getInstance().getUsuarioActual();
+        Usuario usuario = ControladorUsuario.getInstance().getUsuarioActual();
         txtNombre.setText(usuario.getNombre());
         txtId.setText(usuario.getIdUsuario());
         txtCorreo.setText(usuario.getCorreo());
@@ -34,9 +33,9 @@ public class PerfilViewController extends ViewController{
             mostrarAlerta("El nombre de usuario ya existe, use otro");
             return;
         }
-        boolean exito = ControladorUsuario.getInstance().actualizarUsuario(Plataforma.getInstance().getUsuarioActual().getIdUsuario(), nuevoUsername, nuevaPass);
+        boolean exito = ControladorUsuario.getInstance().actualizarUsuario(ControladorUsuario.getInstance().getUsuarioActual().getIdUsuario(), nuevoUsername, nuevaPass);
         if(exito){
-            Usuario usuarioSesion = Plataforma.getInstance().getUsuarioActual();
+            Usuario usuarioSesion = ControladorUsuario.getInstance().getUsuarioActual();
             usuarioSesion.setIdUsuario(nuevoUsername);
             usuarioSesion.setContrasena(nuevaPass);
 
