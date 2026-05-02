@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="main-container" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.finalproject.viewController.UsuarioViewController">
+    <children>
+        <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <VBox alignment="CENTER" maxHeight="450.0" maxWidth="400.0" spacing="25.0" styleClass="login-card">
+                    <padding><Insets bottom="40" left="45" right="45" top="40" /></padding>
+                    <children>
+                        <VBox alignment="CENTER" spacing="5">
+                            <!-- Usando la nueva clase -->
+                            <Label text="BIENVENIDO" styleClass="header-label" />
+                            <Label text="Ingresa tus credenciales" styleClass="secondary-label" />
+                        </VBox>
+
+                        <VBox spacing="15">
+                            <TextField fx:id="txtUser" promptText="Usuario" prefHeight="45.0" styleClass="text-field" />
+                            <PasswordField fx:id="txtPassword" promptText="Contraseña" prefHeight="45.0" styleClass="text-field" />
+                        </VBox>
+
+                        <Button onAction="#iniciarSesion" maxWidth="Infinity" prefHeight="50.0" styleClass="primary-button" text="INICIAR SESIÓN" />
+
+                        <!-- Usando la nueva clase link-button -->
+                        <Button onAction="#cargarMenuRegistro" styleClass="link-button" text="¿No tienes cuenta? Regístrate" />
+                    </children>
+                </VBox>
+            </children>
+        </StackPane>
+    </children>
+</AnchorPane>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="main-container" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.finalproject.viewController.PerfilViewController">
+    <children>
+        <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <VBox alignment="CENTER" maxHeight="650.0" maxWidth="450.0" spacing="20.0" styleClass="login-card">
+                    <padding><Insets bottom="30" left="45" right="45" top="30" /></padding>
+                    <children>
+                        <!-- Encabezado -->
+                        <VBox alignment="CENTER" spacing="5">
+                            <Label styleClass="header-label" text="Mi Perfil" />
+                            <Label styleClass="secondary-label" text="Información de tu cuenta" />
+                        </VBox>
+
+                        <VBox spacing="10">
+                            <!-- Sección Datos Personales -->
+                            <Label styleClass="section-header-label" text="DATOS PERSONALES" />
+
+                            <TextField fx:id="txtNombre" editable="false" prefHeight="40.0" promptText="Nombre" styleClass="text-field-readonly" />
+                            <TextField fx:id="txtId" editable="false" prefHeight="40.0" promptText="Usuario" styleClass="text-field-readonly" />
+                            <TextField fx:id="txtCorreo" editable="false" prefHeight="40.0" promptText="Email" styleClass="text-field-readonly" />
+                            <TextField fx:id="txtTelefono" editable="false" prefHeight="40.0" promptText="Teléfono" styleClass="text-field-readonly" />
+                            <TextField fx:id="txtRol" editable="false" prefHeight="40.0" promptText="Rol" styleClass="text-field-readonly" />
+
+                            <Separator>
+                                <VBox.margin><Insets bottom="5" top="5" /></VBox.margin>
+                            </Separator>
+
+                            <!-- Sección Credenciales -->
+                            <Label styleClass="section-header-label" text="CREDENCIALES" />
+
+                            <TextField fx:id="txtUsername" prefHeight="40.0" promptText="Nuevo Usuario" styleClass="text-field" />
+                            <PasswordField fx:id="txtPassword" prefHeight="40.0" promptText="Nueva Contraseña" styleClass="text-field" />
+                        </VBox>
+
+                        <!-- Botón Principal -->
+                        <Button maxWidth="Infinity" onAction="#actualizarUsuario" prefHeight="50.0" styleClass="primary-button" text="ACTUALIZAR DATOS" />
+
+                        <!-- Link para volver -->
+                        <Button onAction="#regresar" styleClass="link-button" text="Volver al Inicio" />
+                    </children>
+                </VBox>
+            </children>
+        </StackPane>
+    </children>
+</AnchorPane>
