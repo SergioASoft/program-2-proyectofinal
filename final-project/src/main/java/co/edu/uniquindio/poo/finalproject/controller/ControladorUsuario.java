@@ -55,10 +55,12 @@ public class ControladorUsuario {
     }
 
     public Usuario getUsuarioActual() {
+
         return usuarioActual;
     }
 
     public void setUsuarioActual(Usuario usuarioActual) {
+
         this.usuarioActual = usuarioActual;
     }
 }

@@ -49,7 +49,7 @@
                             <VBox.margin><Insets bottom="5" left="10" /></VBox.margin>
                         </Label>
                         <Button maxWidth="Infinity" onAction="#showGestionUsuarios" styleClass="menu-button" text="󰧑  Gestionar Usuarios" />
-                        <Button maxWidth="Infinity" onAction="#showGestionEventos" styleClass="menu-button" text="󰃭  Gestionar Eventos" />
+                        <Button maxWidth="Infinity" onAction="#gestionarEventos" styleClass="menu-button" text="󰃭  Gestionar Eventos" />
                         <Button maxWidth="Infinity" onAction="#showMetricas" styleClass="menu-button" text="󰐊  Panel de Métricas" />
                     </children>
                 </VBox>

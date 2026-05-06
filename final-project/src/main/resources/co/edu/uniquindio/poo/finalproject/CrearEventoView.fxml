@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="main-container" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.finalproject.viewController.CrearEventoViewController">
+    <children>
+        <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <VBox alignment="CENTER" maxHeight="680.0" maxWidth="900.0" spacing="20.0" styleClass="login-card">
+                    <padding>
+                        <Insets bottom="30" left="50" right="50" top="30" />
+                    </padding>
+                    <children>
+                        <!-- Cabecera Informativa -->
+                        <VBox alignment="CENTER" spacing="5">
+                            <Label styleClass="header-label" text="Configuración del Evento" />
+                            <Label styleClass="secondary-label" text="Complete todos los campos para dar de alta el espectáculo en el sistema" />
+                        </VBox>
+
+                        <GridPane hgap="25" vgap="15">
+                            <columnConstraints>
+                                <ColumnConstraints percentWidth="50" />
+                                <ColumnConstraints percentWidth="50" />
+                            </columnConstraints>
+
+                            <children>
+                                <!-- Sección 1: Identificación y Clasificación -->
+                                <VBox spacing="10" GridPane.columnIndex="0">
+                                    <Label styleClass="section-header-label" text="DETALLES DE IDENTIFICACIÓN" />
+                                    <TextField fx:id="txtIdEvento" prefHeight="40.0" promptText="ID del Evento (Ej: CON-2024-01)" styleClass="text-field" />
+                                    <TextField fx:id="txtNombre" prefHeight="40.0" promptText="Nombre oficial del evento" styleClass="text-field" />
+                                    <ComboBox fx:id="comboTipo" maxWidth="Infinity" prefHeight="40.0" promptText="Categoría (Concierto, Teatro...)" styleClass="text-field" />
+                                    <ComboBox fx:id="comboEstado" maxWidth="Infinity" prefHeight="40.0" promptText="Estado Inicial" styleClass="text-field" />
+                                </VBox>
+
+                                <!-- Sección 2: Ubicación y Tiempo -->
+                                <VBox spacing="10" GridPane.columnIndex="1">
+                                    <Label styleClass="section-header-label" text="UBICACIÓN Y CRONOGRAMA" />
+                                    <TextField fx:id="txtCiudad" prefHeight="40.0" promptText="Ciudad" styleClass="text-field" />
+                                    <TextField fx:id="txtRecinto" prefHeight="40.0" promptText="Nombre del Recinto / Lugar" styleClass="text-field" />
+                                    <HBox spacing="10">
+                                        <children>
+                                            <DatePicker fx:id="dateFecha" prefHeight="40.0" promptText="Fecha del evento" styleClass="text-field" HBox.hgrow="ALWAYS" />
+                                            <TextField fx:id="txtHora" prefHeight="40.0" prefWidth="100.0" promptText="Hora (HH:mm)" styleClass="text-field" />
+                                        </children>
+                                    </HBox>
+                                    <TextArea fx:id="txtDescripcion" prefHeight="40.0" promptText="Breve descripción..." styleClass="text-field" wrapText="true" />
+                                </VBox>
+
+                                <!-- Sección 3: Políticas y Condiciones (Ahora con ComboBox) -->
+                                <VBox spacing="10" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                                    <Label styleClass="section-header-label" text="POLÍTICAS Y CONDICIONES" />
+                                    <HBox alignment="CENTER" spacing="20">
+                                        <children>
+                                            <VBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="204.0" spacing="5" HBox.hgrow="ALWAYS">
+                                                <ComboBox fx:id="comboPoliticaCancelacion" maxWidth="300.0" prefHeight="40.0" promptText="Seleccionar Política de Cancelación" styleClass="text-field" />
+                                            </VBox>
+                                        </children>
+                                    </HBox>
+                                </VBox>
+                            </children>
+                            <rowConstraints>
+                                <RowConstraints />
+                                <RowConstraints />
+                            </rowConstraints>
+                        </GridPane>
+
+                        <!-- Botonera -->
+                        <HBox alignment="CENTER" spacing="25">
+                            <padding><Insets top="10" /></padding>
+                            <children>
+                                <Button onAction="#regresar" prefHeight="45.0" prefWidth="200.0" styleClass="link-button" text="Descartar Cambios" />
+                                <Button onAction="#crearEvento" prefHeight="50.0" prefWidth="350.0" styleClass="primary-button" text="FINALIZAR Y CREAR EVENTO" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+        </StackPane>
+    </children>
+</AnchorPane>

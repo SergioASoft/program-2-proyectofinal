@@ -4,7 +4,7 @@ public class UsuarioFactory {
 
     public Usuario GetUsuario(String id, String nombre, String contrasena, String correo, String numero, TipoUsuario tipoUsuario){
         return switch (tipoUsuario){
-            case CLIENTE ->  new Cliente(id,contrasena,nombre,correo,numero, tipoUsuario);
+            case CLIENTE ->  new Cliente(id,contrasena,nombre,correo,numero, tipoUsuario,TipoPago.NINGUNO);
             case ADMIN -> new Admin(id,contrasena,nombre,correo,numero, tipoUsuario);
             default -> throw new RuntimeException("Tipo de usuario no existe");
         };

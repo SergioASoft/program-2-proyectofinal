@@ -1,54 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="main-container" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.finalproject.viewController.PerfilViewController">
     <children>
-        <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <StackPane fx:id="rootStackPane" focusTraversable="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <VBox alignment="CENTER" maxHeight="650.0" maxWidth="450.0" spacing="20.0" styleClass="login-card">
+                <VBox alignment="CENTER" maxHeight="680.0" maxWidth="550.0" spacing="20.0" styleClass="login-card">
                     <padding><Insets bottom="30" left="45" right="45" top="30" /></padding>
                     <children>
                         <!-- Encabezado -->
                         <VBox alignment="CENTER" spacing="5">
                             <Label styleClass="header-label" text="Mi Perfil" />
-                            <Label styleClass="secondary-label" text="Información de tu cuenta" />
+                            <Label styleClass="secondary-label" text="Gestione su información y preferencias" />
                         </VBox>
 
+                        <!-- Datos Personales en Rejilla (Ahorro de espacio) -->
                         <VBox spacing="10">
-                            <!-- Sección Datos Personales -->
-                            <Label styleClass="section-header-label" text="DATOS PERSONALES" />
-
-                            <TextField fx:id="txtNombre" editable="false" prefHeight="40.0" promptText="Nombre" styleClass="text-field-readonly" />
-                            <TextField fx:id="txtId" editable="false" prefHeight="40.0" promptText="Usuario" styleClass="text-field-readonly" />
-                            <TextField fx:id="txtCorreo" editable="false" prefHeight="40.0" promptText="Email" styleClass="text-field-readonly" />
-                            <TextField fx:id="txtTelefono" editable="false" prefHeight="40.0" promptText="Teléfono" styleClass="text-field-readonly" />
-                            <TextField fx:id="txtRol" editable="false" prefHeight="40.0" promptText="Rol" styleClass="text-field-readonly" />
-
-                            <Separator>
-                                <VBox.margin><Insets bottom="5" top="5" /></VBox.margin>
-                            </Separator>
-
-                            <!-- Sección Credenciales -->
-                            <Label styleClass="section-header-label" text="CREDENCIALES" />
-
-                            <TextField fx:id="txtUsername" prefHeight="40.0" promptText="Nuevo Usuario" styleClass="text-field" />
-                            <PasswordField fx:id="txtPassword" prefHeight="40.0" promptText="Nueva Contraseña" styleClass="text-field" />
+                            <children>
+                                <Label styleClass="section-header-label" text="DATOS PERSONALES" />
+                                <GridPane hgap="15" mouseTransparent="true" vgap="10">
+                                    <columnConstraints>
+                                        <ColumnConstraints percentWidth="50.0" />
+                                        <ColumnConstraints percentWidth="50.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="40.0" />
+                                        <RowConstraints minHeight="40.0" />
+                                        <RowConstraints minHeight="40.0" />
+                                    </rowConstraints>
+                                    <children>
+                                        <TextField fx:id="txtNombre" editable="false" promptText="Nombre" styleClass="text-field-readonly" GridPane.columnSpan="2" />
+                                        <TextField fx:id="txtId" editable="false" promptText="ID" styleClass="text-field-readonly" GridPane.rowIndex="1" />
+                                        <TextField fx:id="txtRol" editable="false" promptText="Rol" styleClass="text-field-readonly" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <TextField fx:id="txtCorreo" editable="false" promptText="Email" styleClass="text-field-readonly" GridPane.rowIndex="2" />
+                                        <TextField fx:id="txtTelefono" editable="false" promptText="Teléfono" styleClass="text-field-readonly" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    </children>
+                                </GridPane>
+                            </children>
                         </VBox>
 
-                        <!-- Botón Principal -->
-                        <Button maxWidth="Infinity" onAction="#actualizarUsuario" prefHeight="50.0" styleClass="primary-button" text="ACTUALIZAR DATOS" />
+                        <Separator />
 
-                        <!-- Link para volver -->
-                        <Button onAction="#regresar" styleClass="link-button" text="Volver al Inicio" />
+                        <!-- Configuración de Pago y Seguridad -->
+                        <VBox spacing="12">
+                            <children>
+                                <Label styleClass="section-header-label" text="PAGO Y SEGURIDAD" />
+                                <ComboBox fx:id="comboMetodoPago" maxWidth="Infinity" prefHeight="40.0" promptText="Método de pago preferido" styleClass="text-field" />
+                                <HBox spacing="10">
+                                    <children>
+                                        <TextField fx:id="txtUsername" prefHeight="40.0" promptText="Nuevo Usuario" styleClass="text-field" HBox.hgrow="ALWAYS" />
+                                        <PasswordField fx:id="txtPassword" prefHeight="40.0" promptText="Nueva Clave" styleClass="text-field" HBox.hgrow="ALWAYS" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+
+                        <VBox alignment="CENTER" spacing="10">
+                            <children>
+                                <Button maxWidth="Infinity" onAction="#actualizarUsuario" prefHeight="50.0" styleClass="primary-button" text="ACTUALIZAR DATOS" />
+                                <Button onAction="#regresar" styleClass="link-button" text="Volver al Inicio" />
+                            </children>
+                        </VBox>
                     </children>
                 </VBox>
             </children>
