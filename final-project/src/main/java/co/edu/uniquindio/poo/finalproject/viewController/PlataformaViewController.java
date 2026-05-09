@@ -33,14 +33,16 @@ public class PlataformaViewController extends ViewController{
     public void gestionarPerfil(ActionEvent event) {
         crearVista("/co/edu/uniquindio/poo/finalproject/PerfilView.fxml","Perfil del usuario",event);
     }
+    @FXML
+    public void showExplorarEventos(ActionEvent event) {
+        crearVista("/co/edu/uniquindio/poo/finalproject/ClienteEventoView.fxml","Eventos actuales",event);
+    }
 
     @FXML
     private void showMetricas() {
         System.out.println("Cargando");
     }
-    @FXML
-    public void showExplorarEventos(ActionEvent event) {
-    }
+
 
     @FXML
     public void showMisCompras(ActionEvent event) {
@@ -50,7 +52,7 @@ public class PlataformaViewController extends ViewController{
     }
     @FXML
     public void gestionarEventos(ActionEvent event) {
-        crearVista("/co/edu/uniquindio/poo/finalproject/EventoView.fxml","Gestion de eventos",event);
+        crearVista("/co/edu/uniquindio/poo/finalproject/AdminEventoView.fxml","Gestion de eventos",event);
     }
     @FXML
     public void showGestionRecintos(ActionEvent event) {

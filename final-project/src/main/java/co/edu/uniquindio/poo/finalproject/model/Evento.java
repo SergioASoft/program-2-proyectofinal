@@ -1,7 +1,5 @@
 package co.edu.uniquindio.poo.finalproject.model;
 
-import java.util.List;
-
 public class Evento {
     String idEvento;
     String nombre;
@@ -31,5 +29,37 @@ public class Evento {
 
     public String getNombre() {
         return nombre;
+    }
+
+    public TipoEvento getTipoEvento() {
+        return tipoEvento;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public EstadoEvento getEstadoEvento() {
+        return estadoEvento;
+    }
+
+    public TipoPolitica getTipoPolitica() {
+        return tipoPolitica;
+    }
+
+    public Recinto getRecinto() {
+        return recinto;
+    }
+
+    public void setEstadoEvento(EstadoEvento estadoEvento) {
+        this.estadoEvento = estadoEvento;
     }
 }

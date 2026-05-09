@@ -14,7 +14,6 @@ public class CrearEventoViewController extends ViewController {
     @FXML private TextField txtIdEvento;
     @FXML private TextField txtNombre;
     @FXML private ComboBox<TipoEvento> comboTipo;
-    @FXML private ComboBox<EstadoEvento> comboEstado;
     @FXML private TextField txtCiudad;
     @FXML private TextField txtRecinto;
     @FXML private DatePicker dateFecha;
@@ -25,12 +24,11 @@ public class CrearEventoViewController extends ViewController {
     @FXML
     public void initialize() {
         comboTipo.getItems().setAll(TipoEvento.values());
-        comboEstado.getItems().setAll(EstadoEvento.values());
         comboPoliticaCancelacion.getItems().setAll(TipoPolitica.values());
     }
 
     public void regresar(ActionEvent event) {
-        crearVista("/co/edu/uniquindio/poo/finalproject/EventoView.fxml","Gestion de eventos",event);
+        crearVista("/co/edu/uniquindio/poo/finalproject/AdminEventoView.fxml","Gestion de eventos",event);
     }
 
     public void crearEvento(ActionEvent event) {
@@ -43,17 +41,16 @@ public class CrearEventoViewController extends ViewController {
         TipoEvento tipoEvento = comboTipo.getValue();
         String descripcion = txtDescripcion.getText();
         String ciudad = txtCiudad.getText();
-        String fecha = dateFecha.toString();
-        EstadoEvento estadoEvento = comboEstado.getValue();
+        String fecha = dateFecha.getValue().toString();
         TipoPolitica tipoPolitica = comboPoliticaCancelacion.getValue();
         Recinto recinto = new Recinto();
-        Evento evento = new Evento(idEvento,nombre,tipoEvento,descripcion,ciudad,fecha,estadoEvento,tipoPolitica,recinto);
+        Evento evento = new Evento(idEvento,nombre,tipoEvento,descripcion,ciudad,fecha,EstadoEvento.BORRADOR,tipoPolitica,recinto);
         ControladorEventos.getInstance().registrarEvento(evento);
-        crearVista("/co/edu/uniquindio/poo/finalproject/EventoView.fxml","Gestion de eventos",event);
+        crearVista("/co/edu/uniquindio/poo/finalproject/AdminEventoView.fxml","Gestion de eventos",event);
     }
     private boolean formularioIncompleto(){
         return  txtIdEvento.getText().isEmpty() || txtNombre.getText().isEmpty() || comboTipo.getValue() == null ||
-                comboEstado.getValue() == null || txtCiudad.getText().isEmpty() || txtRecinto.getText().isEmpty() ||
+                txtCiudad.getText().isEmpty() || txtRecinto.getText().isEmpty() ||
                 dateFecha.getValue() == null || txtHora.getText().isEmpty() || txtDescripcion.getText().isEmpty() ||
                 comboPoliticaCancelacion.getValue() == null;
     }

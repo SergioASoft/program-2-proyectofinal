@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 
-public class UsuarioViewController extends ViewController {
+public class LoginViewController extends ViewController {
     @FXML private TextField txtUser;
     @FXML private PasswordField txtPassword;
 

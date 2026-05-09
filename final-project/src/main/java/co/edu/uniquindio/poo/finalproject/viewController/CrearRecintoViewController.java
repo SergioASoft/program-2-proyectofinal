@@ -57,6 +57,6 @@ public class CrearRecintoViewController extends ViewController{
 
     @FXML
     void regresar(ActionEvent event) {
-        crearVista("/co/edu/uniquindio/poo/finalproject/EventoView.fxml","Gestion de eventos",event);
+        crearVista("/co/edu/uniquindio/poo/finalproject/AdminEventoView.fxml","Gestion de eventos",event);
     }
 }

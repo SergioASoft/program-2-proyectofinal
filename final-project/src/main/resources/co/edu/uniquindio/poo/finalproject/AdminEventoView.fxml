@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="720.0" prefWidth="1280.0" styleClass="main-container" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.finalproject.viewController.AdminEventoViewController">
+
+    <top>
+        <VBox spacing="10" styleClass="login-card">
+            <padding><Insets bottom="15" left="25" right="25" top="15" /></padding>
+            <children>
+                <HBox alignment="CENTER_LEFT" spacing="20">
+                    <children>
+                        <VBox>
+                            <Label styleClass="header-label" text="Gestión de Eventos" />
+                            <Label styleClass="secondary-label" text="Administre el ciclo de vida de los espectáculos" />
+                        </VBox>
+                        <Region HBox.hgrow="ALWAYS" />
+
+                        <HBox alignment="CENTER" spacing="10">
+                            <children>
+                                <Button onAction="#crearRecinto" prefHeight="45.0" prefWidth="170.0" style="-fx-border-color: -fx-primary-color; -fx-border-radius: 8;" styleClass="link-button" text="+ NUEVO RECINTO" />
+                                <Button onAction="#crearEvento" prefHeight="45.0" prefWidth="180.0" styleClass="primary-button" text="+ NUEVO EVENTO" />
+
+                                <Button onAction="#regresar" prefHeight="45.0" prefWidth="120.0" styleClass="link-button" text="Volver al inicio" />
+                            </children>
+                        </HBox>
+                    </children>
+                </HBox>
+
+                <Separator styleClass="sidebar-separator" />
+
+                <HBox alignment="CENTER_LEFT" spacing="15">
+                    <children>
+                        <TextField fx:id="txtBusqueda" prefWidth="300.0" promptText="🔍 Buscar por nombre o ID..." styleClass="text-field" />
+                        <ComboBox fx:id="comboCategoria" prefWidth="150.0" promptText="Categoría" styleClass="text-field" />
+                        <ComboBox fx:id="comboEstado" prefWidth="150.0" promptText="Estado" styleClass="text-field" />
+                        <DatePicker fx:id="filterFecha" promptText="Filtrar por fecha" styleClass="text-field" />
+                        <Button onAction="#limpiarFiltros" styleClass="link-button" text="Limpiar Filtros" />
+                    </children>
+                </HBox>
+            </children>
+            <BorderPane.margin><Insets bottom="10" left="15" right="15" top="15" /></BorderPane.margin>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox styleClass="login-card">
+            <padding><Insets bottom="15" left="15" right="15" top="15" /></padding>
+            <children>
+                <Label styleClass="section-header-label" text="CATÁLOGO DE EVENTOS" />
+                <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;" VBox.vgrow="ALWAYS">
+                    <content>
+                        <FlowPane fx:id="containerCards" hgap="20" vgap="20">
+                            <padding><Insets bottom="10" left="10" right="10" top="10" /></padding>
+                        </FlowPane>
+                    </content>
+                </ScrollPane>
+            </children>
+            <BorderPane.margin><Insets bottom="15" left="15" right="5" top="5" /></BorderPane.margin>
+        </VBox>
+    </center>
+
+    <right>
+        <VBox prefWidth="280.0" spacing="15" styleClass="login-card">
+            <padding><Insets bottom="20" left="20" right="20" top="20" /></padding>
+            <children>
+                <Label styleClass="section-header-label" text="ACCIONES DE CONTROL" />
+
+                <VBox spacing="10">
+                    <Button maxWidth="Infinity" onAction="#actualizarEvento" style="-fx-text-fill: #2d3436;" styleClass="menu-button" text="📝 Editar Detalles" />
+                    <Button maxWidth="Infinity" onAction="#publicarEvento" style="-fx-text-fill: #2ecc71;" styleClass="menu-button" text="🚀 Publicar Evento" />
+                    <Button maxWidth="Infinity" onAction="#pausarEvento" style="-fx-text-fill: #f1c40f;" styleClass="menu-button" text="⏸ Pausar Evento" />
+                    <Button maxWidth="Infinity" onAction="#cancelarEvento" style="-fx-text-fill: #e67e22;" styleClass="menu-button" text="🚫 Cancelar Evento" />
+                </VBox>
+
+                <Region VBox.vgrow="ALWAYS" />
+
+                <Separator />
+
+                <Button maxWidth="Infinity" onAction="#eliminarEvento" styleClass="logout-button" text="ELIMINAR PERMANENTE" />
+            </children>
+            <BorderPane.margin><Insets bottom="15" left="5" right="15" top="5" /></BorderPane.margin>
+        </VBox>
+    </right>
+</BorderPane>
