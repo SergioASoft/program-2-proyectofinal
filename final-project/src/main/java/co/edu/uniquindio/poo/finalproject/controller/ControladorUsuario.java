@@ -36,6 +36,7 @@ public class ControladorUsuario {
     }
     public boolean encontrarUsuario(String id){
         return listaClientes.stream()
+                .anyMatch(u -> u.getIdUsuario().equals(id)) || listaAdmins.stream()
                 .anyMatch(u -> u.getIdUsuario().equals(id));
     }
     public boolean actualizarUsuario(String idActual, String nuevoId, String nuevaContrasena) {

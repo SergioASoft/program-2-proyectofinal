@@ -1,8 +1,11 @@
 package co.edu.uniquindio.poo.finalproject.controller;
 
+import co.edu.uniquindio.poo.finalproject.model.EstadoEvento;
 import co.edu.uniquindio.poo.finalproject.model.Evento;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.util.stream.Collectors;
 
 public class ControladorEventos {
     private static ControladorEventos instance;
@@ -26,6 +29,15 @@ public class ControladorEventos {
                         .filter(e -> e.getIdEvento().equals(id))
                         .findFirst()
                         .orElse(null));
+    }
+
+    public ObservableList<Evento> getEventosPublicados() {
+        return listaEventos.stream()
+                .filter(e -> e.getEstadoEvento() == EstadoEvento.PUBLICADO)
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toList(),
+                        FXCollections::observableArrayList
+                ));
     }
 
     public ObservableList<Evento> getListaEventos() {

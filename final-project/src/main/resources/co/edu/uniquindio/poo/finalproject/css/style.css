@@ -8,7 +8,9 @@
     -fx-text-title: #2d3436;
     -fx-text-subtitle: #636e72;
 }
-
+.overlay {
+    -fx-background-color: rgba(0, 0, 0, 0.5); /* Negro con 50% de transparencia */
+}
 /* Contenedor General */
 .main-container {
     -fx-background-color: -fx-bg-main;
