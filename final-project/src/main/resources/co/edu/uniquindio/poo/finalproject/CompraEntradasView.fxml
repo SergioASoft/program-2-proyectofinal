@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+
+<BorderPane fx:id="rootPane" prefHeight="720.0" prefWidth="1280.0" styleClass="main-container" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.finalproject.viewController.CompraEntradasViewController">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20" styleClass="login-card">
+            <padding><Insets bottom="15" left="25" right="25" top="15" /></padding>
+            <children>
+                <VBox>
+                    <Label styleClass="header-label" text="Selección de Entradas" />
+                    <HBox spacing="10">
+                        <Label fx:id="lblRecintoTop" styleClass="secondary-label" text="Recinto: Estadio Centenario" />
+                        <Label styleClass="secondary-label" text="|" />
+                        <Label fx:id="lblEventoTop" styleClass="secondary-label" text="Evento: Concierto Juanes" />
+                    </HBox>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS" />
+                <Button onAction="#regresar" prefHeight="45.0" styleClass="link-button" text="❌ Cancelar y Volver" />
+            </children>
+            <BorderPane.margin><Insets bottom="10" left="15" right="15" top="15" /></BorderPane.margin>
+        </HBox>
+    </top>
+
+    <center>
+        <SplitPane dividerPositions="0.65" style="-fx-box-border: transparent; -fx-background-color: transparent;">
+            <items>
+                <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+                    <content>
+                        <VBox alignment="TOP_CENTER" spacing="20" styleClass="login-card">
+                            <padding><Insets bottom="30" left="30" right="30" top="30" /></padding>
+                            <children>
+                                <HBox alignment="CENTER">
+                                    <Label style="-fx-background-color: #d1d8e0; -fx-background-radius: 10; -fx-font-weight: bold;" text="Escenario">
+                                        <padding><Insets bottom="15" left="60" right="60" top="15" /></padding>
+                                    </Label>
+                                </HBox>
+                                <Region prefHeight="20" />
+                                <GridPane fx:id="gridMapaAsientos" alignment="CENTER" hgap="10" vgap="10">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
+                                    </columnConstraints>
+                                </GridPane>
+                                <Region VBox.vgrow="ALWAYS" />
+                                <HBox alignment="CENTER" spacing="30" style="-fx-background-color: #f1f2f6; -fx-background-radius: 10;">
+                                    <padding><Insets bottom="10" left="20" right="20" top="10" /></padding>
+                                    <children>
+                                        <HBox alignment="CENTER" spacing="10"><Rectangle fill="#fbc531" height="15" width="15" /><Label text="VIP" /></HBox>
+                                        <HBox alignment="CENTER" spacing="10"><Rectangle fill="#e84393" height="15" width="15" /><Label text="Preferencial" /></HBox>
+                                        <HBox alignment="CENTER" spacing="10"><Rectangle fill="#a29bfe" height="15" width="15" /><Label text="General" /></HBox>
+                                        <Separator orientation="VERTICAL" />
+                                        <HBox alignment="CENTER" spacing="10"><Rectangle fill="#7ed6df" height="15" stroke="BLACK" width="15" /><Label text="Seleccionado" /></HBox>
+                                        <HBox alignment="CENTER" spacing="10"><Rectangle fill="#dfe6e9" height="15" width="15" /><Label text="Ocupado" /></HBox>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </content>
+                </ScrollPane>
+
+                <VBox spacing="20" styleClass="login-card">
+                    <padding><Insets bottom="25" left="25" right="25" top="25" /></padding>
+                    <children>
+                        <Label styleClass="section-header-label" text="RESUMEN DE TU COMPRA" />
+                        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;" VBox.vgrow="ALWAYS">
+                            <content>
+                                <VBox fx:id="vboxListaSeleccionados" spacing="10">
+                                    <children>
+                                        <Label fx:id="lblNoSeleccion" style="-fx-text-fill: #a4b0be; -fx-font-style: italic;" text="No has seleccionado asientos aún." />
+                                    </children>
+                                </VBox>
+                            </content>
+                        </ScrollPane>
+                        <Separator />
+                        <HBox alignment="CENTER_RIGHT" spacing="10">
+                            <children>
+                                <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="SUBTOTAL:" />
+                                <Label fx:id="lblSubtotal" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: #0288d1;" text="0" />
+                            </children>
+                        </HBox>
+                        <Region prefHeight="20" />
+                        <Button maxWidth="Infinity" onAction="#procederAlPago" prefHeight="50.0" styleClass="primary-button" text="🔒 PROCEDER AL PAGO" />
+                    </children>
+                    <BorderPane.margin><Insets left="10" /></BorderPane.margin>
+                </VBox>
+            </items>
+            <BorderPane.margin><Insets bottom="15" left="15" right="15" top="5" /></BorderPane.margin>
+        </SplitPane>
+    </center>
+</BorderPane>

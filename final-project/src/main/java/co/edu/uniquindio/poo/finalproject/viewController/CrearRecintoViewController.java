@@ -1,62 +1,183 @@
 package co.edu.uniquindio.poo.finalproject.viewController;
 
+import co.edu.uniquindio.poo.finalproject.controller.facade.ControladorFacade;
+import co.edu.uniquindio.poo.finalproject.model.Asiento;
+import co.edu.uniquindio.poo.finalproject.model.EstadoAsiento;
+import co.edu.uniquindio.poo.finalproject.model.Recinto;
+import co.edu.uniquindio.poo.finalproject.model.TipoZona;
+import co.edu.uniquindio.poo.finalproject.model.builder.Zona;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
-public class CrearRecintoViewController extends ViewController{
+public class CrearRecintoViewController extends ViewController {
+
+    @FXML private TextField txtIdRecinto, txtNombre, txtBusquedaRecinto;
+    @FXML private TextField txtNombreZona, txtCapacidadZona, txtPrecioZona;
+    @FXML private ComboBox<TipoZona> comboTipoZona;
+    @FXML private TableView<Recinto> tablaRecintos;
+    @FXML private TableColumn<Recinto, String> colIdRecinto, colNombreRecinto;
+    @FXML private TableView<Zona> tablaZonas;
+    @FXML private TableColumn<Zona, String> colNombreZona, colTipoZona;
+    @FXML private TableColumn<Zona, Integer> colCapacidadZona, colPrecioZona;
+    @FXML private Button btnFinalizar; // Asegúrate de ponerle fx:id="btnFinalizar" en el FXML
+
+    private final ObservableList<Recinto> listaRecintosUI = FXCollections.observableArrayList();
+    private final ObservableList<Zona> listaZonas = FXCollections.observableArrayList();
+    private Recinto recintoSeleccionado; // RASTREADOR DE EDICIÓN
+
+    ControladorFacade controladorFacade = ControladorFacade.getInstance();
+
     @FXML
-    private TextField txtIdRecinto;
-    @FXML private TextField txtNombre;
-    @FXML private TextField txtCiudad;
-    @FXML private TextField txtDireccion;
-    @FXML private TextField txtBusquedaRecinto;
+    public void initialize() {
+        comboTipoZona.getItems().setAll(TipoZona.values());
+        configurarFiltroNumerico(txtCapacidadZona);
+        configurarFiltroNumerico(txtPrecioZona);
 
-    @FXML private TextField txtNombreZona;
-    @FXML private TextField txtCapacidadZona;
+        colIdRecinto.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIdRecinto()));
+        colNombreRecinto.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
+        tablaRecintos.setItems(listaRecintosUI);
 
-    @FXML private TableView<Object> tablaRecintos;
-    @FXML private TableColumn<Object, String> colIdRecinto;
-    @FXML private TableColumn<Object, String> colNombreRecinto;
-    @FXML private TableColumn<Object, String> colCiudadRecinto;
+        colNombreZona.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIdZona()));
+        colCapacidadZona.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCapacidad()));
+        colPrecioZona.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getAsientos().getFirst().getPrecio()));
+        colTipoZona.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTipoZona().toString()));
+        tablaZonas.setItems(listaZonas);
 
-    @FXML private TableView<Object> tablaZonas;
-    @FXML private TableColumn<Object, String> colNombreZona;
-    @FXML private TableColumn<Object, String> colCapacidadZona;
+        actualizarListaRecintos();
+
+        tablaRecintos.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                recintoSeleccionado = newSelection;
+                cargarDetallesRecinto(newSelection);
+            }
+        });
+    }
+
+    private void cargarDetallesRecinto(Recinto recinto) {
+        txtIdRecinto.setText(recinto.getIdRecinto().replace("REC-", ""));
+        txtIdRecinto.setEditable(false);
+        txtNombre.setText(recinto.getNombre());
+        listaZonas.setAll(new ArrayList<>(recinto.getZonas()));
+        if(btnFinalizar != null) btnFinalizar.setText("ACTUALIZAR RECINTO");
+    }
 
     @FXML
-    void agregarOActualizarZona(ActionEvent event) {
+    void agregarRecinto(ActionEvent event) {
+        if (txtIdRecinto.getText().isEmpty() || txtNombre.getText().isEmpty()) {
+            mostrarAlerta("Llene los datos del recinto");
+            return;
+        }
+        if (listaZonas.size() < 3) {
+            mostrarAlerta("Debe crear las 3 zonas (General, Preferencial y VIP)");
+            return;
+        }
+
+        if (recintoSeleccionado != null) {
+            controladorFacade.eliminarRecinto(recintoSeleccionado);
+            recintoSeleccionado = null;
+        }
+        Recinto nuevo = new Recinto("REC-" + txtIdRecinto.getText(), txtNombre.getText(), new ArrayList<>(listaZonas));
+        controladorFacade.registrarRecinto(nuevo);
+        actualizarListaRecintos();
+        limpiarFormulario();
+    }
+
+    @FXML
+    void agregarZona(ActionEvent event) {
+        if (validarCamposZona()) {
+            int capacidad = Integer.parseInt(txtCapacidadZona.getText());
+            int precio = Integer.parseInt(txtPrecioZona.getText());
+            TipoZona tipo = comboTipoZona.getValue();
+
+            if (listaZonas.stream().anyMatch(z -> z.getTipoZona() == tipo)) {
+                mostrarAlerta("Ya existe una zona de tipo " + tipo);
+                return;
+            }
+
+            List<Asiento> asientos = new ArrayList<>();
+            String prefijo = tipo.toString().substring(0, 1);
+            for (int i = 1; i <= capacidad; i++) {
+                asientos.add(new Asiento(prefijo + i, 1, i, EstadoAsiento.DISPONIBLE, precio));
+            }
+
+            Zona nuevaZona = new Zona.Builder(txtNombreZona.getText(), tipo, capacidad, asientos)
+                    .reglas(tipo == TipoZona.VIP ? "Acceso exclusivo VIP" : "Sin restricciones")
+                    .build();
+
+            listaZonas.add(nuevaZona);
+            limpiarCamposZona();
+        }
+    }
+
+    @FXML
+    void limpiarAlClickAfuera(MouseEvent event) {
+        if (!(event.getTarget() instanceof TableColumn || event.getTarget() instanceof TableView) && recintoSeleccionado!=null) {
+            limpiarFormulario();
+        }
     }
 
     @FXML
     void eliminarRecinto(ActionEvent event) {
+        Recinto seleccionado = tablaRecintos.getSelectionModel().getSelectedItem();
+        if(seleccionado != null) {
+            controladorFacade.eliminarRecinto(seleccionado);
+            actualizarListaRecintos();
+            limpiarFormulario();
+        }
     }
 
     @FXML
     void eliminarZona(ActionEvent event) {
+        Zona seleccionada = tablaZonas.getSelectionModel().getSelectedItem();
+        if (seleccionada != null) {
+            listaZonas.remove(seleccionada);
+        }
     }
 
-    @FXML
-    void guardarRecintoCompleto(ActionEvent event) {
+    private void actualizarListaRecintos() {
+        listaRecintosUI.setAll(controladorFacade.getTodosLosRecintos());
     }
 
-    @FXML
-    void limpiarFormulario(ActionEvent event) {
+    private void limpiarCamposZona() {
+        txtNombreZona.clear();
+        txtCapacidadZona.clear();
+        txtPrecioZona.clear();
+        comboTipoZona.setValue(null);
+    }
+
+    void limpiarFormulario() {
         txtIdRecinto.clear();
+        txtIdRecinto.setEditable(true);
         txtNombre.clear();
-        txtCiudad.clear();
-        txtDireccion.clear();
-        tablaZonas.getItems().clear();
+        limpiarCamposZona();
+        listaZonas.clear();
+        recintoSeleccionado = null;
+        tablaRecintos.getSelectionModel().clearSelection();
+        if(btnFinalizar != null) btnFinalizar.setText("FINALIZAR Y CREAR RECINTO");
     }
 
-    @FXML
-    void prepararEdicionZona(ActionEvent event) {
+    private void configurarFiltroNumerico(TextField textField) {
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                textField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
     }
 
-    @FXML
-    void regresar(ActionEvent event) {
-        crearVista("/co/edu/uniquindio/poo/finalproject/AdminEventoView.fxml","Gestion de eventos",event);
+    private boolean validarCamposZona() {
+        return !txtNombreZona.getText().isEmpty() && comboTipoZona.getValue() != null &&
+                !txtCapacidadZona.getText().isEmpty() && !txtPrecioZona.getText().isEmpty();
+    }
+
+    @FXML void regresar(ActionEvent event) {
+        crearVista("/co/edu/uniquindio/poo/finalproject/AdminEventoView.fxml", "Gestión de Eventos", event);
     }
 }

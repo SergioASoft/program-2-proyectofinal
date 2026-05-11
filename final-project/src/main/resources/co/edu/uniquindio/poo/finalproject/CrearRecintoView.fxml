@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="720.0" prefWidth="1280.0" styleClass="main-container" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.finalproject.viewController.CrearRecintoViewController">
+<BorderPane onMouseClicked="#limpiarAlClickAfuera" prefHeight="720.0" prefWidth="1280.0" styleClass="main-container" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.finalproject.viewController.CrearRecintoViewController">
 
     <top>
         <VBox spacing="10" styleClass="login-card">
@@ -13,16 +25,11 @@
                 <HBox alignment="CENTER_LEFT" spacing="20">
                     <children>
                         <VBox>
-                            <Label styleClass="header-label" text="Administración de Recintos" />
-                            <Label styleClass="secondary-label" text="Cree, consulte y gestione zonas de los escenarios" />
+                            <Label styleClass="header-label" text="Panel de Administración: Recintos y Zonas" />
+                            <Label styleClass="secondary-label" text="Configure los escenarios y defina la capacidad de sus localidades" />
                         </VBox>
                         <Region HBox.hgrow="ALWAYS" />
-                        <HBox alignment="CENTER" spacing="10">
-                            <children>
-                                <Button onAction="#regresar" prefHeight="45.0" prefWidth="150.0" styleClass="link-button" text="Volver a Gestión" />
-                                <Button onAction="#limpiarFormulario" prefHeight="45.0" prefWidth="180.0" styleClass="primary-button" style="-fx-background-color: #636e72;" text="NUEVO REGISTRO" />
-                            </children>
-                        </HBox>
+                        <Button onAction="#regresar" prefHeight="45.0" prefWidth="120.0" styleClass="link-button" text="Volver" />
                     </children>
                 </HBox>
             </children>
@@ -31,19 +38,22 @@
     </top>
 
     <left>
-        <VBox prefWidth="420.0" spacing="15" styleClass="login-card">
+        <VBox prefWidth="380.0" spacing="15" styleClass="login-card">
             <padding><Insets bottom="20" left="20" right="20" top="20" /></padding>
             <children>
-                <Label styleClass="section-header-label" text="CONSULTAR RECINTOS" />
-                <TextField fx:id="txtBusquedaRecinto" promptText="🔍 Buscar por nombre..." styleClass="text-field" />
+                <Label styleClass="section-header-label" text="1. LISTADO DE RECINTOS (CRUD)" />
+                <TextField fx:id="txtBusquedaRecinto" promptText="🔍 Buscar recinto..." />
                 <TableView fx:id="tablaRecintos" VBox.vgrow="ALWAYS">
                     <columns>
                         <TableColumn fx:id="colIdRecinto" prefWidth="80.0" text="ID" />
-                        <TableColumn fx:id="colNombreRecinto" prefWidth="180.0" text="Nombre" />
-                        <TableColumn fx:id="colCiudadRecinto" prefWidth="100.0" text="Ciudad" />
+                        <TableColumn fx:id="colNombreRecinto" prefWidth="250.0" text="Nombre Escenario" />
                     </columns>
                 </TableView>
-                <Button maxWidth="Infinity" onAction="#eliminarRecinto" styleClass="logout-button" text="ELIMINAR SELECCIONADO" />
+                <HBox spacing="10">
+                    <children>
+                        <Button maxWidth="Infinity" onAction="#eliminarRecinto" styleClass="logout-button" text="ELIMINAR" HBox.hgrow="ALWAYS" />
+                    </children>
+                </HBox>
             </children>
             <BorderPane.margin><Insets bottom="15" left="15" right="10" top="5" /></BorderPane.margin>
         </VBox>
@@ -53,41 +63,74 @@
         <VBox spacing="15" styleClass="login-card">
             <padding><Insets bottom="20" left="25" right="25" top="20" /></padding>
             <children>
-                <Label styleClass="section-header-label" text="DETALLES DEL LUGAR" />
+                <Label styleClass="section-header-label" text="2. INFORMACIÓN DEL RECINTO" />
                 <GridPane hgap="15" vgap="10">
                     <columnConstraints>
-                        <ColumnConstraints percentWidth="50" />
-                        <ColumnConstraints percentWidth="50" />
+                        <ColumnConstraints percentWidth="30" />
+                        <ColumnConstraints percentWidth="70" />
                     </columnConstraints>
                     <children>
-                        <TextField fx:id="txtIdRecinto" promptText="ID Recinto" styleClass="text-field" GridPane.columnIndex="0" />
-                        <TextField fx:id="txtNombre" promptText="Nombre del Recinto" styleClass="text-field" GridPane.columnIndex="1" />
-                        <TextField fx:id="txtCiudad" promptText="Ciudad" styleClass="text-field" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-                        <TextField fx:id="txtDireccion" promptText="Dirección" styleClass="text-field" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                        <VBox spacing="5">
+                            <Label style="-fx-font-weight: bold;" text="ID Único:" />
+                            <TextField fx:id="txtIdRecinto" promptText="Ej: REC-001" />
+                        </VBox>
+                        <VBox spacing="5" GridPane.columnIndex="1">
+                            <Label style="-fx-font-weight: bold;" text="Nombre del Escenario:" />
+                            <TextField fx:id="txtNombre" promptText="Ej: Estadio Centenario" />
+                        </VBox>
                     </children>
+                    <rowConstraints>
+                        <RowConstraints />
+                    </rowConstraints>
                 </GridPane>
+
                 <Separator />
-                <Label styleClass="section-header-label" text="GESTIÓN DE ZONAS" />
-                <HBox spacing="10">
+
+                <Label styleClass="section-header-label" text="3. CONFIGURAR ZONAS OBLIGATORIAS" />
+                <VBox spacing="10" style="-fx-background-color: #f1f2f6; -fx-padding: 15; -fx-background-radius: 10;">
                     <children>
-                        <TextField fx:id="txtNombreZona" promptText="Nombre Zona" styleClass="text-field" HBox.hgrow="ALWAYS" />
-                        <TextField fx:id="txtCapacidadZona" promptText="Capacidad" prefWidth="100.0" styleClass="text-field" />
-                        <Button onAction="#agregarOActualizarZona" styleClass="primary-button" text="Guardar Zona" />
+                        <HBox alignment="BOTTOM_LEFT" spacing="10">
+                            <children>
+                                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                    <Label style="-fx-font-weight: bold;" text="Nombre de la Zona" />
+                                    <TextField fx:id="txtNombreZona" promptText="Ej: VIP Central" />
+                                </VBox>
+                                <VBox spacing="5">
+                                    <Label style="-fx-font-weight: bold;" text="Tipo" />
+                                    <ComboBox fx:id="comboTipoZona" prefWidth="130.0" promptText="Tipo" />
+                                </VBox>
+                                <VBox spacing="5">
+                                    <Label style="-fx-font-weight: bold;" text="Capacidad" />
+                                    <TextField fx:id="txtCapacidadZona" prefWidth="80.0" promptText="0" />
+                                </VBox>
+                                <VBox spacing="5">
+                                    <Label style="-fx-font-weight: bold;" text="Precio ($)" />
+                                    <TextField fx:id="txtPrecioZona" prefWidth="100.0" promptText="0.00" />
+                                </VBox>
+                                <Button onAction="#agregarZona" prefHeight="40.0" styleClass="primary-button" text="Guardar Zona" />
+                            </children>
+                        </HBox>
                     </children>
-                </HBox>
+                </VBox>
+
                 <TableView fx:id="tablaZonas" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn fx:id="colNombreZona" prefWidth="250.0" text="Zona" />
-                        <TableColumn fx:id="colCapacidadZona" prefWidth="150.0" text="Capacidad" />
+                        <TableColumn fx:id="colTipoZona" prefWidth="120.0" text="Tipo" />
+                        <TableColumn fx:id="colNombreZona" prefWidth="250.0" text="Nombre" />
+                        <TableColumn fx:id="colCapacidadZona" prefWidth="100.0" text="Capacidad" />
+                        <TableColumn fx:id="colPrecioZona" prefWidth="120.0" text="Precio Unitario" />
                     </columns>
                 </TableView>
-                <HBox alignment="CENTER_RIGHT" spacing="10">
+
+                <HBox alignment="CENTER_LEFT" spacing="10">
                     <children>
-                        <Button onAction="#prepararEdicionZona" styleClass="link-button" text="Editar Zona" />
-                        <Button onAction="#eliminarZona" styleClass="link-button" style="-fx-text-fill: #d63031;" text="Eliminar Zona" />
+                        <Label style="-fx-text-fill: #e17055; -fx-font-style: italic; -fx-font-size: 11;" text="* Requisito: Debe incluir General, Preferencial y VIP." />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Button onAction="#eliminarZona" style="-fx-text-fill: #d63031;" styleClass="link-button" text="Quitar Zona" />
                     </children>
                 </HBox>
-                <Button maxWidth="Infinity" onAction="#guardarRecintoCompleto" prefHeight="50.0" styleClass="primary-button" text="GUARDAR CAMBIOS DEL RECINTO" />
+
+                <Button fx:id="btnFinalizar" maxWidth="Infinity" onAction="#agregarRecinto" prefHeight="55.0" style="-fx-font-size: 16; -fx-font-weight: bold;" styleClass="primary-button" text="FINALIZAR Y CREAR RECINTO" />
             </children>
             <BorderPane.margin><Insets bottom="15" left="5" right="15" top="5" /></BorderPane.margin>
         </VBox>

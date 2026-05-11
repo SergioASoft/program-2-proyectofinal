@@ -1,6 +1,6 @@
 package co.edu.uniquindio.poo.finalproject.viewController;
-import co.edu.uniquindio.poo.finalproject.controller.ControladorUsuario;
-import co.edu.uniquindio.poo.finalproject.model.Admin;
+import co.edu.uniquindio.poo.finalproject.controller.facade.ControladorUsuario;
+import co.edu.uniquindio.poo.finalproject.model.factory.Admin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.StackPane;

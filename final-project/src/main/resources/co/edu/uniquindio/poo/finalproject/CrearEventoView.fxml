@@ -52,7 +52,7 @@
                                 <VBox spacing="12" GridPane.columnIndex="1">
                                     <Label styleClass="section-header-label" text="UBICACIÓN Y CRONOGRAMA" />
                                     <TextField fx:id="txtCiudad" prefHeight="40.0" promptText="Ciudad" styleClass="text-field" />
-                                    <TextField fx:id="txtRecinto" prefHeight="40.0" promptText="Nombre del Recinto / Lugar" styleClass="text-field" />
+                                    <ComboBox fx:id="comboRecinto" maxWidth="Infinity" prefHeight="40.0" promptText="Seleccionar Recinto registrado" styleClass="text-field" />
                                     <HBox spacing="10">
                                         <children>
                                             <DatePicker fx:id="dateFecha" prefHeight="40.0" promptText="Fecha" styleClass="text-field" HBox.hgrow="ALWAYS" />

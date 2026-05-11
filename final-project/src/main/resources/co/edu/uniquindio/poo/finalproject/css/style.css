@@ -216,3 +216,65 @@
     -fx-text-fill: -fx-text-subtitle;
     -fx-font-weight: bold;
 }
+/* Contenedor de un bloque de asientos (ej: VIP Oriental) */
+.bloque-asientos {
+    -fx-background-color: transparent;
+    -fx-border-color: #dfe6e9;
+    -fx-border-width: 1;
+    -fx-border-style: dashed;
+    -fx-border-radius: 5;
+    -fx-padding: 5;
+}
+
+/* Estilo base para CUALQUIER asiento */
+.asiento {
+    -fx-min-width: 28px;
+    -fx-min-height: 28px;
+    -fx-max-width: 28px;
+    -fx-max-height: 28px;
+    -fx-background-radius: 5;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+    -fx-padding: 0;
+    -fx-alignment: center;
+}
+
+/* Estados de Asiento */
+.asiento-vip {
+    -fx-background-color: #fbc531;
+}
+.asiento-preferencial {
+    -fx-background-color: #e84393;
+}
+.asiento-general {
+    -fx-background-color: #a29bfe;
+}
+
+.asiento-seleccionado {
+    -fx-background-color: #7ed6df; /* Celeste cyan */
+    -fx-border-color: black;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-text-fill: black;
+}
+
+.asiento-ocupado {
+    -fx-background-color: #dfe6e9; /* Gris claro */
+    -fx-text-fill: #a4b0be;
+    -fx-cursor: default;
+}
+
+/* Etiquetas de Zona en el mapa (VIP, Preferencial, Oriental, etc.) */
+.label-zona-mapa {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+}
+.label-orientacion-mapa {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #636e72;
+    -fx-alignment: center;
+}

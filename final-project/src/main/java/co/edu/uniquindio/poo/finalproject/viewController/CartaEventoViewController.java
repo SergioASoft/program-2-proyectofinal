@@ -1,6 +1,6 @@
 package co.edu.uniquindio.poo.finalproject.viewController;
 
-import co.edu.uniquindio.poo.finalproject.model.Evento;
+import co.edu.uniquindio.poo.finalproject.model.builder.Evento;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -16,7 +16,7 @@ public class CartaEventoViewController {
         lblNombre.setText(evento.getNombre().toUpperCase());
         lblId.setText("ID: " + evento.getIdEvento());
         lblLugar.setText(evento.getRecinto().getNombre() + ", " + evento.getCiudad());
-        lblFecha.setText(evento.getFecha());
+        lblFecha.setText(evento.getFecha().toString());
         lblCategoria.setText(evento.getTipoEvento().toString());
         lblEstado.setText(evento.getEstadoEvento().toString());
 
