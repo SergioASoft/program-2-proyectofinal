@@ -46,6 +46,7 @@ public class PlataformaViewController extends ViewController{
 
     @FXML
     public void showMisCompras(ActionEvent event) {
+        crearVista("/co/edu/uniquindio/poo/finalproject/HistorialComprasView.fxml","Mis compras",event);
     }
     @FXML
     public void showGestionUsuarios(ActionEvent event) {

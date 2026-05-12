@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,9 +43,9 @@ public class ClienteEventoViewController extends ViewController implements Mostr
         String nombre = txtBusqueda.getText();
         String ciudad = txtCiudad.getText();
         TipoEvento tipo = comboCategoria.getValue();
-        String fecha = dpFecha.getValue() == null ? "" : dpFecha.getValue().toString();
+        LocalDate fecha = dpFecha.getValue();
 
-        if (nombre.isEmpty() && ciudad.isEmpty() && tipo == null && fecha.isEmpty()) {
+        if (nombre.isEmpty() && ciudad.isEmpty() && tipo == null && fecha == null) {
             mostrarAlerta("Rellene al menos un campo para filtrar eventos");
             return;
         }
@@ -54,7 +55,7 @@ public class ClienteEventoViewController extends ViewController implements Mostr
                 .filter(e -> nombre.isEmpty() || e.getNombre().equalsIgnoreCase(nombre))
                 .filter(e -> ciudad.isEmpty() || e.getCiudad().equalsIgnoreCase(ciudad))
                 .filter(e -> tipo == null     || e.getTipoEvento() == tipo)
-                .filter(e -> fecha.isEmpty()  || e.getFecha().equals(fecha))
+                .filter(e -> fecha == null  || e.getFecha().equals(fecha))
                 .collect(Collectors.toList());
 
         cargarEventos(filtrados);
@@ -129,5 +130,7 @@ public class ClienteEventoViewController extends ViewController implements Mostr
     }
 
     public void verMisCompras(ActionEvent event) {
+        crearVista("/co/edu/uniquindio/poo/finalproject/HistorialComprasView.fxml",
+                "Mis compras", event);
     }
 }

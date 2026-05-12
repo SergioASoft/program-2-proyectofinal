@@ -17,18 +17,33 @@
     <children>
         <HBox spacing="30.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
             <children>
-                <VBox prefWidth="350.0" spacing="20.0" styleClass="login-card">
+                <VBox prefWidth="390.0" spacing="16.0" styleClass="login-card">
                     <padding><Insets bottom="30" left="30" right="30" top="30" /></padding>
                     <children>
                         <Label styleClass="section-header-label" text="RESUMEN DE RESERVA" />
+                        <GridPane hgap="10" vgap="8">
+                            <children>
+                                <Label style="-fx-font-weight: bold;" text="Compra:" />
+                                <Label fx:id="lblIdCompra" text="CMP" GridPane.columnIndex="1" />
+                                <Label style="-fx-font-weight: bold;" text="Estado:" GridPane.rowIndex="1" />
+                                <Label fx:id="lblEstadoCompra" text="CREADA" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <Label style="-fx-font-weight: bold;" text="Comprobante:" GridPane.rowIndex="2" />
+                                <Label fx:id="lblComprobante" text="Pendiente" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                            </children>
+                        </GridPane>
                         <Separator />
-                        <VBox fx:id="vboxDetalleAsientos" spacing="10.0" VBox.vgrow="ALWAYS" />
+                        <Label styleClass="section-header-label" text="ASIENTOS" />
+                        <VBox fx:id="vboxDetalleAsientos" spacing="8.0" />
+                        <Separator />
+                        <Label styleClass="section-header-label" text="SERVICIOS" />
+                        <VBox fx:id="vboxDetalleServicios" spacing="8.0" />
+                        <Region VBox.vgrow="ALWAYS" />
                         <Separator />
                         <HBox alignment="CENTER_LEFT">
                             <children>
                                 <Label style="-fx-font-weight: bold; -fx-font-size: 16px;" text="TOTAL A PAGAR:" />
                                 <Region HBox.hgrow="ALWAYS" />
-                                <Label fx:id="lblTotalPago" style="-fx-text-fill: #2ecc71; -fx-font-size: 20px; -fx-font-weight: bold;" text="\$0" />
+                                <Label fx:id="lblTotalPago" style="-fx-text-fill: #2ecc71; -fx-font-size: 20px; -fx-font-weight: bold;" text="0" />
                             </children>
                         </HBox>
                     </children>
@@ -37,8 +52,8 @@
                 <VBox spacing="20.0" styleClass="login-card" HBox.hgrow="ALWAYS">
                     <padding><Insets bottom="30" left="40" right="40" top="30" /></padding>
                     <children>
-                        <Label styleClass="header-label" text="Método de Pago" />
-                        <Label styleClass="secondary-label" text="Ingrese los detalles para confirmar su compra" />
+                        <Label styleClass="header-label" text="Metodo de Pago" />
+                        <Label styleClass="secondary-label" text="Confirma la compra o modificala antes de pagar" />
 
                         <GridPane hgap="20.0" vgap="15.0">
                             <columnConstraints>
@@ -46,22 +61,11 @@
                             </columnConstraints>
                             <children>
                                 <VBox spacing="8.0">
-                                    <Label text="Tipo de pago" />
-                                    <TextField fx:id="txtNumeroTarjeta" editable="false" focusTraversable="false" promptText="**** **** **** ****" styleClass="text-field" />
-                                </VBox>
-                                <HBox spacing="20.0" GridPane.rowIndex="1">
-                                    <children>
-                                        <VBox spacing="8.0" HBox.hgrow="ALWAYS" />
-                                        <VBox spacing="8.0" HBox.hgrow="ALWAYS" />
-                                    </children>
-                                </HBox>
-                                <VBox spacing="8.0" GridPane.rowIndex="2">
-                                    <HBox spacing="10.0" />
+                                    <Label text="Metodo guardado en perfil" />
+                                    <TextField fx:id="txtNumeroTarjeta" editable="false" focusTraversable="false" promptText="Metodo de pago" styleClass="text-field" />
                                 </VBox>
                             </children>
                             <rowConstraints>
-                                <RowConstraints />
-                                <RowConstraints />
                                 <RowConstraints />
                             </rowConstraints>
                         </GridPane>
@@ -69,7 +73,8 @@
                         <Region VBox.vgrow="ALWAYS" />
 
                         <Button fx:id="btnConfirmarPago" maxWidth="Infinity" onAction="#confirmarPago" prefHeight="50.0" style="-fx-background-color: #2ecc71; -fx-font-size: 16px; -fx-font-weight: bold;" styleClass="primary-button" text="CONFIRMAR Y PAGAR" />
-                        <Button maxWidth="Infinity" onAction="#cancelar" styleClass="link-button" text="Regresar a la selección" />
+                        <Button maxWidth="Infinity" onAction="#modificarCompra" prefHeight="44.0" styleClass="primary-button" text="MODIFICAR COMPRA" />
+                        <Button maxWidth="Infinity" onAction="#cancelarCompra" styleClass="link-button" text="Cancelar compra" />
                     </children>
                 </VBox>
             </children>

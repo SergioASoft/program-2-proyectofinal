@@ -48,8 +48,21 @@ public class PerfilViewController extends ViewController{
         String nuevoUsername = txtUsername.getText();
         String nuevaPass     = txtPassword.getText();
 
+        boolean actualizoMetodoPago = actualizarMetodoPago();
+        boolean quiereActualizarCredenciales = !nuevoUsername.isEmpty() || !nuevaPass.isEmpty();
+
+        if (!quiereActualizarCredenciales) {
+            if (actualizoMetodoPago) {
+                mostrarAlerta("Metodo de pago actualizado correctamente.");
+                cargarInformacionUsuario();
+            } else {
+                mostrarAlerta("No hay cambios para actualizar.");
+            }
+            return;
+        }
+
         if (nuevoUsername.isEmpty() || nuevaPass.isEmpty()) {
-            mostrarAlerta("Debe llenar los campos");
+            mostrarAlerta("Debe llenar usuario y contrasena para actualizar credenciales");
             return;
         }
         if (controladorFacade.existeUsuario(nuevoUsername)) {
@@ -58,7 +71,6 @@ public class PerfilViewController extends ViewController{
         }
 
         String idActual = controladorFacade.getUsuarioActual().getIdUsuario();
-
         boolean exito = controladorFacade.actualizarCredenciales(idActual, nuevoUsername, nuevaPass);
 
         if (exito) {
@@ -69,6 +81,15 @@ public class PerfilViewController extends ViewController{
         } else {
             mostrarAlerta("Error al actualizar los datos.");
         }
+    }
+
+    private boolean actualizarMetodoPago() {
+        Usuario usuario = controladorFacade.getUsuarioActual();
+        if (usuario instanceof Cliente cliente && comboMetodoPago.getValue() != null) {
+            cliente.setTipoPago(comboMetodoPago.getValue());
+            return true;
+        }
+        return false;
     }
 
     public void regresar(ActionEvent event) {
