@@ -20,10 +20,14 @@ public class ControladorUsuario {
     public void registrarUsuario(Usuario usuario){
         if(usuario.getTipoUsuario() == TipoUsuario.ADMIN){
             listaAdmins.add(usuario);
-            usuarioActual = usuario;
+            if (usuarioActual==null){
+                usuarioActual = usuario;
+            }
             return;
         }
-        usuarioActual = usuario;
+        if (usuarioActual==null){
+            usuarioActual = usuario;
+        }
         listaClientes.add(usuario);
     }
 
