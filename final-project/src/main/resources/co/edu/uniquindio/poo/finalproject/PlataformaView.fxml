@@ -11,7 +11,6 @@
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane prefHeight="720.0" prefWidth="1280.0" styleClass="main-container" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.finalproject.viewController.PlataformaViewController">
-
     <left>
         <VBox prefWidth="280" spacing="5" styleClass="sidebar">
             <padding><Insets bottom="20" left="15" right="15" top="40" /></padding>
@@ -21,7 +20,7 @@
                     <children>
                         <VBox>
                             <Label styleClass="sidebar-brand" text="CENTENARIO" />
-                            <Label styleClass="sidebar-brand-subtitle" text="Software de Gestión" />
+                            <Label styleClass="sidebar-brand-subtitle" text="Software de Gestion" />
                         </VBox>
                     </children>
                 </HBox>
@@ -30,27 +29,29 @@
                     <VBox.margin><Insets bottom="20" top="10" /></VBox.margin>
                 </Separator>
 
-                <!-- Sección Cliente (VBox con fx:id para controlarlo) -->
                 <VBox fx:id="clientPanel" spacing="5.0">
                     <children>
-                        <Label styleClass="menu-section-label" text="MÓDULO CLIENTE">
+                        <Label styleClass="menu-section-label" text="MODULO CLIENTE">
                             <VBox.margin><Insets left="10" /></VBox.margin>
                         </Label>
-                        <Button maxWidth="Infinity" onAction="#gestionarPerfil" styleClass="menu-button" text="󰀧  Gestionar perfil" />
-                  <Button layoutX="10.0" layoutY="32.0" maxWidth="Infinity" onAction="#showExplorarEventos" styleClass="menu-button" text="󰀧  Explorar Eventos" />
-                        <Button maxWidth="Infinity" onAction="#showMisCompras" styleClass="menu-button" text="󰓗  Mis Compras" />
+                        <Button maxWidth="Infinity" onAction="#gestionarPerfil" styleClass="menu-button" text="Gestionar perfil" />
+                        <Button maxWidth="Infinity" onAction="#showExplorarEventos" styleClass="menu-button" text="Explorar eventos" />
+                        <Button maxWidth="Infinity" onAction="#showMisCompras" styleClass="menu-button" text="Mis compras" />
                     </children>
                 </VBox>
 
-                <!-- Sección Admin -->
                 <VBox fx:id="adminPanel" managed="true" spacing="5" visible="true">
                     <children>
                         <Label styleClass="menu-section-label" text="SISTEMA ADMINISTRATIVO">
                             <VBox.margin><Insets bottom="5" left="10" /></VBox.margin>
                         </Label>
-                        <Button maxWidth="Infinity" onAction="#showGestionUsuarios" styleClass="menu-button" text="󰧑  Gestionar Usuarios" />
-                        <Button maxWidth="Infinity" onAction="#gestionarEventos" styleClass="menu-button" text="󰃭  Gestionar Eventos" />
-                        <Button maxWidth="Infinity" onAction="#showMetricas" styleClass="menu-button" text="󰐊  Panel de Métricas" />
+                        <Button maxWidth="Infinity" onAction="#showGestionUsuarios" styleClass="menu-button" text="Gestionar usuarios" />
+                        <Button maxWidth="Infinity" onAction="#gestionarEventos" styleClass="menu-button" text="Gestionar eventos" />
+                        <Button maxWidth="Infinity" onAction="#showGestionRecintos" styleClass="menu-button" text="Recintos y zonas" />
+                        <Button maxWidth="Infinity" onAction="#showGestionAsientos" styleClass="menu-button" text="Asientos" />
+                        <Button maxWidth="Infinity" onAction="#showGestionCompras" styleClass="menu-button" text="Compras" />
+                        <Button maxWidth="Infinity" onAction="#showIncidencias" styleClass="menu-button" text="Incidencias" />
+                        <Button maxWidth="Infinity" onAction="#showMetricas" styleClass="menu-button" text="Panel de metricas" />
                     </children>
                 </VBox>
 
@@ -60,7 +61,7 @@
                     <VBox.margin><Insets bottom="15" /></VBox.margin>
                 </Separator>
 
-                <Button maxWidth="Infinity" onAction="#cerrarSesion" styleClass="logout-button" text="CERRAR SESIÓN" />
+                <Button maxWidth="Infinity" onAction="#cerrarSesion" styleClass="logout-button" text="CERRAR SESION" />
             </children>
         </VBox>
     </left>
@@ -76,15 +77,13 @@
                         </VBox>
 
                         <HBox alignment="CENTER" spacing="20">
-                            <!-- Tarjeta 1 corregida sin style inline -->
                             <VBox alignment="CENTER" styleClass="metric-card">
-                                <Label styleClass="metric-label" text="Eventos Activos" />
+                                <Label styleClass="metric-label" text="Eventos activos" />
                                 <Label styleClass="metric-value-primary" text="12" />
                             </VBox>
 
-                            <!-- Tarjeta 2 corregida sin style inline -->
                             <VBox alignment="CENTER" styleClass="metric-card">
-                                <Label styleClass="metric-label" text="Ventas de Hoy" />
+                                <Label styleClass="metric-label" text="Ventas de hoy" />
                                 <Label styleClass="metric-value-success" text="84" />
                             </VBox>
                         </HBox>

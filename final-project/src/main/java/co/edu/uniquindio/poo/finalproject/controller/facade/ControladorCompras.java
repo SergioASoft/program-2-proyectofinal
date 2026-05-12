@@ -2,11 +2,15 @@ package co.edu.uniquindio.poo.finalproject.controller.facade;
 
 import co.edu.uniquindio.poo.finalproject.model.Asiento;
 import co.edu.uniquindio.poo.finalproject.model.EstadoAsiento;
+import co.edu.uniquindio.poo.finalproject.model.Entrada;
 import co.edu.uniquindio.poo.finalproject.model.TipoPago;
 import co.edu.uniquindio.poo.finalproject.model.TipoServicioAdicional;
 import co.edu.uniquindio.poo.finalproject.model.builder.Evento;
+import co.edu.uniquindio.poo.finalproject.model.builder.Zona;
 import co.edu.uniquindio.poo.finalproject.model.factory.Cliente;
 import co.edu.uniquindio.poo.finalproject.model.factory.CompraFactory;
+import co.edu.uniquindio.poo.finalproject.model.factory.EntradaFactory;
+import co.edu.uniquindio.poo.finalproject.model.factory.Usuario;
 import co.edu.uniquindio.poo.finalproject.model.state.ContextoCompra;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +23,7 @@ import java.util.stream.Collectors;
 public class ControladorCompras {
     private static ControladorCompras instance;
     private final CompraFactory compraFactory = new CompraFactory();
+    private final EntradaFactory entradaFactory = new EntradaFactory();
 
     private ControladorCompras() {
     }
@@ -36,6 +41,7 @@ public class ControladorCompras {
         validarDisponibilidad(asientos, null);
 
         ContextoCompra compra = compraFactory.crear(evento, asientos, servicios);
+        compra.setUsuarioAsociado(cliente);
         asientos.forEach(asiento -> asiento.setEstadoAsiento(EstadoAsiento.RESERVADO));
         cliente.getHistorialCompras().add(compra);
         return compra;
@@ -59,6 +65,28 @@ public class ControladorCompras {
         compra.actualizarDetalle(nuevosAsientos, servicios);
     }
 
+    public void reasignarAsientos(ContextoCompra compra, List<Asiento> nuevosAsientos) {
+        validarCompra(compra);
+        validarAsientos(nuevosAsientos);
+        if ("CANCELADA".equals(compra.obtenerNombreEstado()) || "REEMBOLSADA".equals(compra.obtenerNombreEstado())) {
+            throw new IllegalStateException("No se pueden reasignar asientos de una compra cerrada.");
+        }
+        validarDisponibilidad(nuevosAsientos, compra);
+
+        List<Asiento> anteriores = new ArrayList<>(compra.getAsientos());
+        anteriores.stream()
+                .filter(asiento -> !nuevosAsientos.contains(asiento))
+                .forEach(asiento -> asiento.setEstadoAsiento(EstadoAsiento.DISPONIBLE));
+
+        EstadoAsiento estadoDestino = compra.permiteModificacion() ? EstadoAsiento.RESERVADO : EstadoAsiento.VENDIDO;
+        nuevosAsientos.forEach(asiento -> asiento.setEstadoAsiento(estadoDestino));
+        compra.reasignarAsientos(nuevosAsientos);
+
+        if (!compra.permiteModificacion()) {
+            compra.registrarEntradas(generarEntradas(compra));
+        }
+    }
+
     public void cancelarCompra(ContextoCompra compra) {
         validarCompra(compra);
         if (!compra.permiteModificacion()) {
@@ -78,6 +106,7 @@ public class ControladorCompras {
         }
         compra.realizarPago(metodoPago);
         compra.getAsientos().forEach(asiento -> asiento.setEstadoAsiento(EstadoAsiento.VENDIDO));
+        compra.registrarEntradas(generarEntradas(compra));
     }
 
     public void confirmarCompra(ContextoCompra compra) {
@@ -98,6 +127,7 @@ public class ControladorCompras {
         compra.reembolsar();
         if ("REEMBOLSADA".equals(compra.obtenerNombreEstado())) {
             liberarAsientos(compra);
+            compra.anularEntradas();
         }
     }
 
@@ -112,6 +142,33 @@ public class ControladorCompras {
     public ObservableList<ContextoCompra> obtenerHistorial(Cliente cliente) {
         validarCliente(cliente);
         return FXCollections.observableArrayList(cliente.getHistorialCompras());
+    }
+
+    public ObservableList<ContextoCompra> obtenerTodasLasCompras(List<Usuario> usuarios) {
+        return usuarios.stream()
+                .filter(Cliente.class::isInstance)
+                .map(Cliente.class::cast)
+                .flatMap(cliente -> cliente.getHistorialCompras().stream())
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toList(),
+                        FXCollections::observableArrayList
+                ));
+    }
+
+    public ObservableList<ContextoCompra> filtrarTodasLasCompras(List<Usuario> usuarios, LocalDate fecha, String evento, String estado) {
+        String busquedaEvento = evento == null ? "" : evento.toLowerCase();
+        String estadoBuscado = estado == null ? "" : estado;
+        return obtenerTodasLasCompras(usuarios).stream()
+                .filter(compra -> fecha == null || compra.getFechaCreacion().equals(fecha))
+                .filter(compra -> busquedaEvento.isBlank()
+                        || compra.getEvento().getNombre().toLowerCase().contains(busquedaEvento)
+                        || compra.getEvento().getIdEvento().toLowerCase().contains(busquedaEvento)
+                        || compra.getIdCompra().toLowerCase().contains(busquedaEvento))
+                .filter(compra -> estadoBuscado.isBlank() || compra.obtenerNombreEstado().equals(estadoBuscado))
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toList(),
+                        FXCollections::observableArrayList
+                ));
     }
 
     public ObservableList<ContextoCompra> filtrarCompras(Cliente cliente, LocalDate fecha, String evento, String estado) {
@@ -146,6 +203,27 @@ public class ControladorCompras {
                 asiento.setEstadoAsiento(EstadoAsiento.DISPONIBLE);
             }
         });
+    }
+
+    private List<Entrada> generarEntradas(ContextoCompra compra) {
+        List<Entrada> entradas = new ArrayList<>();
+        for (Asiento asiento : compra.getAsientos()) {
+            Zona zona = buscarZona(compra.getEvento(), asiento);
+            if (zona != null) {
+                entradas.add(entradaFactory.crear(compra, zona, asiento));
+            }
+        }
+        return entradas;
+    }
+
+    private Zona buscarZona(Evento evento, Asiento asiento) {
+        if (evento == null || evento.getRecinto() == null) {
+            return null;
+        }
+        return evento.getRecinto().getZonas().stream()
+                .filter(zona -> zona.getAsientos().contains(asiento))
+                .findFirst()
+                .orElse(null);
     }
 
     private void validarAsientos(List<Asiento> asientos) {

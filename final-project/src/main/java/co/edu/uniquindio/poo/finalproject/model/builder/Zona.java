@@ -60,4 +60,22 @@ public class Zona {
     public List<Asiento> getAsientos() {
         return asientos;
     }
+
+    public int getAsientosOcupados() {
+        return (int) asientos.stream()
+                .filter(asiento -> asiento.getEstadoAsiento() != co.edu.uniquindio.poo.finalproject.model.EstadoAsiento.DISPONIBLE)
+                .count();
+    }
+
+    public double getPorcentajeOcupacion() {
+        if (capacidad == 0) {
+            return 0;
+        }
+        return (getAsientosOcupados() * 100.0) / capacidad;
+    }
+
+    @Override
+    public String toString() {
+        return idZona + " - " + tipoZona;
+    }
 }

@@ -1,10 +1,12 @@
 package co.edu.uniquindio.poo.finalproject.model.state;
 
 import co.edu.uniquindio.poo.finalproject.model.Asiento;
+import co.edu.uniquindio.poo.finalproject.model.Entrada;
 import co.edu.uniquindio.poo.finalproject.model.TipoPago;
 import co.edu.uniquindio.poo.finalproject.model.TipoServicioAdicional;
 import co.edu.uniquindio.poo.finalproject.model.builder.Evento;
 import co.edu.uniquindio.poo.finalproject.model.decorator.CalculadoraCompraDecorada;
+import co.edu.uniquindio.poo.finalproject.model.factory.Usuario;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,10 +21,12 @@ public class ContextoCompra {
     private final Evento evento;
     private final List<Asiento> asientos;
     private final List<TipoServicioAdicional> serviciosAdicionales;
+    private final List<Entrada> entradas;
     private final LocalDate fechaCreacion;
     private LocalDate fechaPago;
     private TipoPago metodoPago;
     private String comprobante;
+    private Usuario usuarioAsociado;
 
     public ContextoCompra(Evento evento, List<Asiento> asientos) {
         this("CMP-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase(), evento, asientos, List.of());
@@ -34,6 +38,7 @@ public class ContextoCompra {
         this.evento = evento;
         this.asientos = new ArrayList<>(asientos);
         this.serviciosAdicionales = new ArrayList<>(serviciosAdicionales);
+        this.entradas = new ArrayList<>();
         this.fechaCreacion = LocalDate.now();
         this.metodoPago = TipoPago.NINGUNO;
     }
@@ -50,6 +55,14 @@ public class ContextoCompra {
         asientos.addAll(nuevosAsientos);
         serviciosAdicionales.clear();
         serviciosAdicionales.addAll(nuevosServicios);
+        entradas.clear();
+    }
+
+    public void reasignarAsientos(List<Asiento> nuevosAsientos) {
+        anularEntradas();
+        asientos.clear();
+        asientos.addAll(nuevosAsientos);
+        entradas.clear();
     }
 
     public void realizarPago(TipoPago metodoPago) {
@@ -123,6 +136,19 @@ public class ContextoCompra {
         return "CB-" + idCompra.replace("CMP-", "") + "-" + UUID.randomUUID().toString().substring(0, 4).toUpperCase();
     }
 
+    public void registrarEntradas(List<Entrada> entradasGeneradas) {
+        entradas.clear();
+        entradas.addAll(entradasGeneradas);
+    }
+
+    public void anularEntradas() {
+        entradas.forEach(Entrada::anular);
+    }
+
+    public void setUsuarioAsociado(Usuario usuarioAsociado) {
+        this.usuarioAsociado = usuarioAsociado;
+    }
+
     public String getIdCompra() {
         return idCompra;
     }
@@ -139,6 +165,10 @@ public class ContextoCompra {
         return Collections.unmodifiableList(serviciosAdicionales);
     }
 
+    public List<Entrada> getEntradas() {
+        return Collections.unmodifiableList(entradas);
+    }
+
     public LocalDate getFechaCreacion() {
         return fechaCreacion;
     }
@@ -153,5 +183,9 @@ public class ContextoCompra {
 
     public String getComprobante() {
         return comprobante;
+    }
+
+    public Usuario getUsuarioAsociado() {
+        return usuarioAsociado;
     }
 }

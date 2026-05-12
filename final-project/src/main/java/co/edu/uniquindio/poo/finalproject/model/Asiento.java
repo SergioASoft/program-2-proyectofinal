@@ -35,6 +35,22 @@ public class Asiento {
         return precio;
     }
 
+    public void setIdAsiento(String idAsiento) {
+        this.idAsiento = idAsiento;
+    }
+
+    public void setFila(int fila) {
+        this.fila = fila;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public void setPrecio(int precio) {
+        this.precio = precio;
+    }
+
     public void setEstadoAsiento(EstadoAsiento estadoAsiento) {
         this.estadoAsiento = estadoAsiento;
     }

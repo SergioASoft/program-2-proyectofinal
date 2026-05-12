@@ -39,8 +39,8 @@ public class PlataformaViewController extends ViewController{
     }
 
     @FXML
-    private void showMetricas() {
-        System.out.println("Cargando");
+    private void showMetricas(ActionEvent event) {
+        crearVista("/co/edu/uniquindio/poo/finalproject/PanelMetricasView.fxml","Panel de metricas",event);
     }
 
 
@@ -58,9 +58,19 @@ public class PlataformaViewController extends ViewController{
     }
     @FXML
     public void showGestionRecintos(ActionEvent event) {
+        crearVista("/co/edu/uniquindio/poo/finalproject/CrearRecintoView.fxml","Gestion de recintos",event);
     }
     @FXML
     public void showIncidencias(ActionEvent event) {
+        crearVista("/co/edu/uniquindio/poo/finalproject/GestionIncidenciasView.fxml","Gestion de incidencias",event);
+    }
+    @FXML
+    public void showGestionAsientos(ActionEvent event) {
+        crearVista("/co/edu/uniquindio/poo/finalproject/GestionAsientosView.fxml","Gestion de asientos",event);
+    }
+    @FXML
+    public void showGestionCompras(ActionEvent event) {
+        crearVista("/co/edu/uniquindio/poo/finalproject/GestionComprasAdminView.fxml","Gestion de compras",event);
     }
     @FXML
     public void cerrarSesion(ActionEvent event) {

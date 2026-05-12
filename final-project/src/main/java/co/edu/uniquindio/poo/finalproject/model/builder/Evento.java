@@ -118,4 +118,9 @@ public class Evento {
     public void setEstadoEvento(EstadoEvento estadoEvento) {
         this.estadoEvento = estadoEvento;
     }
+
+    @Override
+    public String toString() {
+        return idEvento + " - " + nombre;
+    }
 }
