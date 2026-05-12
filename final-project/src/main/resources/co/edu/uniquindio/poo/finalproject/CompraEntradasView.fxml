@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 
@@ -51,7 +52,6 @@
                                         <Label style="-fx-font-weight: bold;" text="Zona:" />
                                         <ComboBox fx:id="comboFiltroZona" prefWidth="190.0" promptText="Todas las zonas" styleClass="text-field" />
                                         <Button onAction="#limpiarFiltroZona" styleClass="link-button" text="Todas" />
-                                        <Region HBox.hgrow="ALWAYS" />
                                         <Label style="-fx-background-color: #d1d8e0; -fx-background-radius: 8; -fx-font-weight: bold;" text="Escenario">
                                             <padding><Insets bottom="12" left="55" right="55" top="12" /></padding>
                                         </Label>
@@ -69,12 +69,12 @@
                                 <HBox alignment="CENTER" spacing="30" style="-fx-background-color: #f1f2f6; -fx-background-radius: 10;">
                                     <padding><Insets bottom="10" left="20" right="20" top="10" /></padding>
                                     <children>
-                                        <HBox alignment="CENTER" spacing="10"><Rectangle fill="#fbc531" height="15" width="15" /><Label text="VIP" /></HBox>
-                                        <HBox alignment="CENTER" spacing="10"><Rectangle fill="#e84393" height="15" width="15" /><Label text="Preferencial" /></HBox>
-                                        <HBox alignment="CENTER" spacing="10"><Rectangle fill="#a29bfe" height="15" width="15" /><Label text="General" /></HBox>
+                                        <HBox alignment="CENTER" spacing="10"><Rectangle fill="#fbc531" height="15" width="15" /><Label style="-fx-text-fill: black;" text="VIP" /></HBox>
+                                        <HBox alignment="CENTER" spacing="10"><Rectangle fill="#e84393" height="15" width="15" /><Label style="-fx-text-fill: black;" text="Preferencial" /></HBox>
+                                        <HBox alignment="CENTER" spacing="10"><Rectangle fill="#a29bfe" height="15" width="15" /><Label style="-fx-text-fill: black;" text="General" /></HBox>
                                         <Separator orientation="VERTICAL" />
-                                        <HBox alignment="CENTER" spacing="10"><Rectangle fill="#7ed6df" height="15" stroke="BLACK" width="15" /><Label text="Seleccionado" /></HBox>
-                                        <HBox alignment="CENTER" spacing="10"><Rectangle fill="#dfe6e9" height="15" width="15" /><Label text="No disponible" /></HBox>
+                                        <HBox alignment="CENTER" spacing="10"><Rectangle fill="#7ed6df" height="15" stroke="BLACK" width="15" /><Label style="-fx-text-fill: black;" text="Seleccionado" /></HBox>
+                                        <HBox alignment="CENTER" spacing="10"><Rectangle fill="#dfe6e9" height="15" width="15" /><Label style="-fx-text-fill: black;" text="No disponible" /></HBox>
                                     </children>
                                 </HBox>
                             </children>
@@ -116,6 +116,15 @@
                                 <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="TOTAL:" GridPane.rowIndex="2" />
                                 <Label fx:id="lblTotal" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: #2ecc71;" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                             </children>
+                     <columnConstraints>
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                     </rowConstraints>
                         </GridPane>
                         <Region VBox.vgrow="ALWAYS" />
                         <Button maxWidth="Infinity" onAction="#procederAlPago" prefHeight="50.0" styleClass="primary-button" text="PROCEDER AL PAGO" />

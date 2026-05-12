@@ -212,8 +212,8 @@
     -fx-background-radius: 5;
 }
 .section-header-label {
+    -fx-text-fill: black;
     -fx-font-size: 10px;
-    -fx-text-fill: -fx-text-subtitle;
     -fx-font-weight: bold;
 }
 /* Contenedor de un bloque de asientos (ej: VIP Oriental) */

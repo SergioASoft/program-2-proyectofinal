@@ -11,9 +11,11 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane prefHeight="720.0" prefWidth="1280.0" styleClass="main-container" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.finalproject.viewController.PanelMetricasViewController">
@@ -22,8 +24,8 @@
             <padding><Insets bottom="15" left="25" right="25" top="15" /></padding>
             <children>
                 <VBox>
-                    <Label styleClass="header-label" text="Panel de Metricas" />
-                    <Label styleClass="secondary-label" text="Ventas, ocupacion, servicios, cancelacion y top eventos" />
+                    <Label style="-fx-text-fill: black;" styleClass="header-label" text="Panel de Metricas" />
+                    <Label style="-fx-text-fill: black;" styleClass="secondary-label" text="Ventas, ocupacion, servicios, cancelacion y top eventos" />
                 </VBox>
                 <Region HBox.hgrow="ALWAYS" />
                 <ComboBox fx:id="comboReporte" prefWidth="230.0" promptText="Reporte" />
@@ -44,48 +46,57 @@
                         <VBox spacing="8" styleClass="login-card">
                             <padding><Insets bottom="15" left="15" right="15" top="15" /></padding>
                             <children>
-                                <Label styleClass="section-header-label" text="VENTAS POR PERIODO" />
+                                <Label style="-fx-text-fill: black;" styleClass="section-header-label" text="VENTAS POR PERIODO" />
                                 <LineChart fx:id="chartVentas" prefHeight="260.0">
-                                    <xAxis><CategoryAxis label="Fecha" /></xAxis>
-                                    <yAxis><NumberAxis label="Ingresos" /></yAxis>
+                                    <xAxis><CategoryAxis label="Fecha" tickLabelFill="BLACK" /></xAxis>
+                                    <yAxis><NumberAxis label="Ingresos" tickLabelFill="BLACK" /></yAxis>
                                 </LineChart>
                             </children>
                         </VBox>
                         <VBox spacing="8" styleClass="login-card" GridPane.columnIndex="1">
                             <padding><Insets bottom="15" left="15" right="15" top="15" /></padding>
                             <children>
-                                <Label styleClass="section-header-label" text="OCUPACION POR ZONA" />
+                                <Label style="-fx-text-fill: black;" styleClass="section-header-label" text="OCUPACION POR ZONA" />
                                 <BarChart fx:id="chartOcupacion" prefHeight="260.0">
-                                    <xAxis><CategoryAxis label="Zona" /></xAxis>
-                                    <yAxis><NumberAxis label="Porcentaje" /></yAxis>
+                                    <xAxis><CategoryAxis label="Zona" tickLabelFill="BLACK" /></xAxis>
+                                    <yAxis><NumberAxis label="Porcentaje" tickLabelFill="BLACK" /></yAxis>
                                 </BarChart>
                             </children>
                         </VBox>
                         <VBox spacing="8" styleClass="login-card" GridPane.rowIndex="1">
                             <padding><Insets bottom="15" left="15" right="15" top="15" /></padding>
                             <children>
-                                <Label styleClass="section-header-label" text="INGRESOS POR SERVICIOS" />
+                                <Label style="-fx-text-fill: black;" styleClass="section-header-label" text="INGRESOS POR SERVICIOS" />
                                 <PieChart fx:id="chartServicios" prefHeight="260.0" />
                             </children>
                         </VBox>
                         <VBox spacing="8" styleClass="login-card" GridPane.columnIndex="1" GridPane.rowIndex="1">
                             <padding><Insets bottom="15" left="15" right="15" top="15" /></padding>
                             <children>
-                                <Label fx:id="lblTasaCancelacion" styleClass="section-header-label" text="TASA DE CANCELACION" />
+                                <Label fx:id="lblTasaCancelacion" style="-fx-text-fill: black;" styleClass="section-header-label" text="TASA DE CANCELACION" />
                                 <PieChart fx:id="chartCancelacion" prefHeight="260.0" />
                             </children>
                         </VBox>
                         <VBox spacing="8" styleClass="login-card" GridPane.columnSpan="2" GridPane.rowIndex="2">
                             <padding><Insets bottom="15" left="15" right="15" top="15" /></padding>
                             <children>
-                                <Label styleClass="section-header-label" text="TOP EVENTOS" />
+                                <Label style="-fx-text-fill: black;" styleClass="section-header-label" text="TOP EVENTOS" />
                                 <BarChart fx:id="chartTopEventos" prefHeight="260.0">
-                                    <xAxis><CategoryAxis label="Evento" /></xAxis>
-                                    <yAxis><NumberAxis label="Compras" /></yAxis>
+                                    <xAxis><CategoryAxis label="Evento" tickLabelFill="BLACK" /></xAxis>
+                                    <yAxis><NumberAxis label="Compras" tickLabelFill="BLACK" /></yAxis>
                                 </BarChart>
                             </children>
                         </VBox>
                     </children>
+                    <columnConstraints>
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                    </rowConstraints>
                 </GridPane>
             </content>
         </ScrollPane>

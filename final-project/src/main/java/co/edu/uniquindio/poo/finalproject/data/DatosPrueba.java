@@ -37,12 +37,12 @@ public final class DatosPrueba {
         ControladorFacade facade = ControladorFacade.getInstance();
         UsuarioFactory usuarioFactory = new UsuarioFactory();
 
-        Usuario admin = usuarioFactory.GetUsuario("admin", "Administrador", "admin123",
-                "admin@centenario.com", "3000000000", TipoUsuario.ADMIN);
-        Cliente cliente = (Cliente) usuarioFactory.GetUsuario("cliente", "Cliente Demo", "cliente123",
-                "cliente@demo.com", "3111111111", TipoUsuario.CLIENTE);
-        Cliente clienteDos = (Cliente) usuarioFactory.GetUsuario("cliente2", "Cliente Dos", "cliente123",
-                "cliente2@demo.com", "3222222222", TipoUsuario.CLIENTE);
+        Usuario admin = usuarioFactory.GetUsuario("cristian", "cristian", "123",
+                "cristian@gmail.com", "123", TipoUsuario.ADMIN);
+        Cliente cliente = (Cliente) usuarioFactory.GetUsuario("sergio", "sergio", "123",
+                "sergio@gmail.com", "123", TipoUsuario.CLIENTE);
+        Cliente clienteDos = (Cliente) usuarioFactory.GetUsuario("mafe", "mafe", "123",
+                "mafe@gmail.com", "123", TipoUsuario.CLIENTE);
         cliente.setTipoPago(TipoPago.VISA);
         clienteDos.setTipoPago(TipoPago.PSE);
 
@@ -56,7 +56,7 @@ public final class DatosPrueba {
                         crearZona("VIP Central", TipoZona.VIP, 8, 120000, "V"),
                         crearZona("Preferencial Occidente", TipoZona.PREFERENCIAL, 10, 80000, "P")
                 ));
-        Recinto auditorio = new Recinto("REC-002", "Auditorio Principal", "Pereira", "Cra 12 #8-40",
+        Recinto auditorio = new Recinto("REC-002", "Auditorio Principal", "Cali", "Cra 12 #8-40",
                 List.of(
                         crearZona("General", TipoZona.GENERAL, 10, 30000, "AG"),
                         crearZona("VIP", TipoZona.VIP, 6, 90000, "AV"),
@@ -65,14 +65,14 @@ public final class DatosPrueba {
         facade.registrarRecinto(estadio);
         facade.registrarRecinto(auditorio);
 
-        Evento concierto = new Evento.Builder("EV-001", "Concierto Andino",
-                "Noche musical con artistas regionales.", "Armenia", LocalDate.now().plusDays(15), estadio)
+        Evento concierto = new Evento.Builder("EV-001", "Concierto Ferxxo",
+                "Ferxxo tour armenia.", "Armenia", LocalDate.now().plusDays(15), estadio)
                 .tipoEvento(TipoEvento.CONCIERTO)
                 .estadoEvento(EstadoEvento.PUBLICADO)
                 .tipoPolitica(TipoPolitica.REMBOLSO)
                 .hora("20:00")
                 .build();
-        Evento conferencia = new Evento.Builder("EV-002", "Foro de Tecnologia",
+        Evento conferencia = new Evento.Builder("EV-002", "Colombia 5.0",
                 "Conferencia sobre innovacion y software.", "Pereira", LocalDate.now().plusDays(25), auditorio)
                 .tipoEvento(TipoEvento.CONFERENCIA)
                 .estadoEvento(EstadoEvento.PUBLICADO)
@@ -82,7 +82,7 @@ public final class DatosPrueba {
         facade.registrarEvento(concierto);
         facade.registrarEvento(conferencia);
 
-        facade.setUsuarioActual(cliente);
+        /*facade.setUsuarioActual(cliente);
         ContextoCompra compraPagada = facade.crearCompra(concierto,
                 List.of(estadio.getZonas().get(0).getAsientos().get(0), estadio.getZonas().get(1).getAsientos().get(0)),
                 List.of(TipoServicioAdicional.SEGURO, TipoServicioAdicional.PARQUEADERO));
@@ -100,7 +100,7 @@ public final class DatosPrueba {
         facade.pagarCompra(compraIncidencia, TipoPago.PSE);
         facade.reportarIncidencia(compraIncidencia);
 
-        facade.setUsuarioActual(null);
+        facade.setUsuarioActual(null);*/
     }
 
     private static Zona crearZona(String nombre, TipoZona tipo, int capacidad, int precio, String prefijo) {
