@@ -2,10 +2,12 @@ package co.edu.uniquindio.poo.finalproject.controller.facade;
 
 import co.edu.uniquindio.poo.finalproject.model.EstadoEvento;
 import co.edu.uniquindio.poo.finalproject.model.Recinto;
+import co.edu.uniquindio.poo.finalproject.model.TipoEvento;
 import co.edu.uniquindio.poo.finalproject.model.builder.Evento;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.time.LocalDate;
 import java.util.stream.Collectors;
 
 public class ControladorEventos {
@@ -45,14 +47,28 @@ public class ControladorEventos {
     }
 
     public boolean eliminarEvento(Evento evento){
-        listaEventos.remove(evento);
-        return listaEventos.contains(evento);
+        return listaEventos.remove(evento);
     }
 
     public boolean eliminarRecinto(Recinto recinto){
-        listaRecintos.remove(recinto);
-        return listaRecintos.contains(recinto);
+        return listaRecintos.remove(recinto);
     }
+
+    public ObservableList<Evento> filtrarEventos(String texto, TipoEvento tipo, EstadoEvento estado, LocalDate fecha){
+        String busqueda = texto == null ? "" : texto.toLowerCase();
+        return listaEventos.stream()
+                .filter(e -> busqueda.isBlank()
+                        || e.getNombre().toLowerCase().contains(busqueda)
+                        || e.getIdEvento().toLowerCase().contains(busqueda))
+                .filter(e -> tipo == null || e.getTipoEvento() == tipo)
+                .filter(e -> estado == null || e.getEstadoEvento() == estado)
+                .filter(e -> fecha == null || e.getFecha().equals(fecha))
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toList(),
+                        FXCollections::observableArrayList
+                ));
+    }
+
 
     public ObservableList<Evento> getListaEventos() {
         return listaEventos;

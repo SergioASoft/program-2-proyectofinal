@@ -46,7 +46,8 @@
                 <TableView fx:id="tablaRecintos" VBox.vgrow="ALWAYS">
                     <columns>
                         <TableColumn fx:id="colIdRecinto" prefWidth="80.0" text="ID" />
-                        <TableColumn fx:id="colNombreRecinto" prefWidth="250.0" text="Nombre Escenario" />
+                        <TableColumn fx:id="colNombreRecinto" prefWidth="150.0" text="Nombre" />
+                        <TableColumn fx:id="colCiudadRecinto" prefWidth="100.0" text="Ciudad" />
                     </columns>
                 </TableView>
                 <HBox spacing="10">
@@ -66,8 +67,10 @@
                 <Label styleClass="section-header-label" text="2. INFORMACIÓN DEL RECINTO" />
                 <GridPane hgap="15" vgap="10">
                     <columnConstraints>
-                        <ColumnConstraints percentWidth="30" />
-                        <ColumnConstraints percentWidth="70" />
+                        <ColumnConstraints percentWidth="25" />
+                        <ColumnConstraints percentWidth="25" />
+                        <ColumnConstraints percentWidth="25" />
+                        <ColumnConstraints percentWidth="25" />
                     </columnConstraints>
                     <children>
                         <VBox spacing="5">
@@ -77,6 +80,14 @@
                         <VBox spacing="5" GridPane.columnIndex="1">
                             <Label style="-fx-font-weight: bold;" text="Nombre del Escenario:" />
                             <TextField fx:id="txtNombre" promptText="Ej: Estadio Centenario" />
+                        </VBox>
+                        <VBox spacing="5" GridPane.columnIndex="2">
+                            <Label style="-fx-font-weight: bold;" text="Ciudad:" />
+                            <TextField fx:id="txtCiudad" promptText="Ej: Armenia" />
+                        </VBox>
+                        <VBox spacing="5" GridPane.columnIndex="3">
+                            <Label style="-fx-font-weight: bold;" text="Direccion:" />
+                            <TextField fx:id="txtDireccion" promptText="Ej: Cra 15 #10-20" />
                         </VBox>
                     </children>
                     <rowConstraints>

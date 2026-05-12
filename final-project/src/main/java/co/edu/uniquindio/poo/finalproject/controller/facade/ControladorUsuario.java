@@ -27,6 +27,13 @@ public class ControladorUsuario {
         listaClientes.add(usuario);
     }
 
+    public ObservableList<Usuario> getListaUsuarios(){
+        ObservableList<Usuario> usuarios = FXCollections.observableArrayList();
+        usuarios.addAll(listaClientes);
+        usuarios.addAll(listaAdmins);
+        return usuarios;
+    }
+
     public Usuario obtenerUsuario(String id, String contrasena) {
         return listaClientes.stream()
                 .filter(u -> u.getIdUsuario().equals(id) && u.getContrasena().equals(contrasena))
@@ -55,6 +62,39 @@ public class ControladorUsuario {
             return true;
         }
         return false;
+    }
+
+    public boolean actualizarUsuario(String idActual, String nuevoId, String nombre, String correo, String numero, String nuevaContrasena) {
+        Usuario u = buscarUsuarioPorId(idActual);
+        if (u != null) {
+            u.setIdUsuario(nuevoId);
+            u.setNombre(nombre);
+            u.setCorreo(correo);
+            u.setNumero(numero);
+            u.setContrasena(nuevaContrasena);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean eliminarUsuario(Usuario usuario){
+        if(usuario == null || usuario == usuarioActual){
+            return false;
+        }
+        if(usuario.getTipoUsuario() == TipoUsuario.ADMIN){
+            return listaAdmins.remove(usuario);
+        }
+        return listaClientes.remove(usuario);
+    }
+
+    private Usuario buscarUsuarioPorId(String id){
+        return listaClientes.stream()
+                .filter(user -> user.getIdUsuario().equals(id))
+                .findFirst()
+                .orElse(listaAdmins.stream()
+                        .filter(user -> user.getIdUsuario().equals(id))
+                        .findFirst()
+                        .orElse(null));
     }
 
     public Usuario getUsuarioActual() {

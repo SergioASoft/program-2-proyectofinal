@@ -48,6 +48,18 @@ public class ControladorFacade {
         return controladorUsuario.actualizarUsuario(idActual, nuevoId, nuevaContrasena);
     }
 
+    public boolean actualizarUsuario(String idActual, String nuevoId, String nombre, String correo, String numero, String nuevaContrasena) {
+        return controladorUsuario.actualizarUsuario(idActual, nuevoId, nombre, correo, numero, nuevaContrasena);
+    }
+
+    public boolean eliminarUsuario(Usuario usuario) {
+        return controladorUsuario.eliminarUsuario(usuario);
+    }
+
+    public ObservableList<Usuario> getTodosLosUsuarios() {
+        return controladorUsuario.getListaUsuarios();
+    }
+
     public Usuario getUsuarioActual() {
         return controladorUsuario.getUsuarioActual();
     }
@@ -74,6 +86,10 @@ public class ControladorFacade {
 
     public ObservableList<Evento> getTodosLosEventos() {
         return controladorEventos.getListaEventos();
+    }
+
+    public ObservableList<Evento> filtrarEventosAdmin(String texto, co.edu.uniquindio.poo.finalproject.model.TipoEvento tipo, EstadoEvento estado, java.time.LocalDate fecha) {
+        return controladorEventos.filtrarEventos(texto, tipo, estado, fecha);
     }
 
     public ObservableList<Recinto> getTodosLosRecintos() {

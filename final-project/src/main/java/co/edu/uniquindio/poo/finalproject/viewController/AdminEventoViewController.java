@@ -28,6 +28,10 @@ public class AdminEventoViewController extends ViewController{
     public void initialize() {
         comboCategoria.getItems().setAll(TipoEvento.values());
         comboEstado.getItems().setAll(EstadoEvento.values());
+        txtBusqueda.textProperty().addListener((obs, oldValue, newValue) -> aplicarFiltros());
+        comboCategoria.valueProperty().addListener((obs, oldValue, newValue) -> aplicarFiltros());
+        comboEstado.valueProperty().addListener((obs, oldValue, newValue) -> aplicarFiltros());
+        filterFecha.valueProperty().addListener((obs, oldValue, newValue) -> aplicarFiltros());
         mostrarEventos();
     }
 
@@ -95,8 +99,21 @@ public class AdminEventoViewController extends ViewController{
     }
 
     public void mostrarEventos() {
+        cargarEventos(controladorFacade.getTodosLosEventos());
+    }
+
+    private void aplicarFiltros() {
+        cargarEventos(controladorFacade.filtrarEventosAdmin(
+                txtBusqueda.getText(),
+                comboCategoria.getValue(),
+                comboEstado.getValue(),
+                filterFecha.getValue()
+        ));
+    }
+
+    private void cargarEventos(Iterable<Evento> eventos) {
         containerCards.getChildren().clear();
-        for (Evento evento : controladorFacade.getTodosLosEventos()) {
+        for (Evento evento : eventos) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(
                         "/co/edu/uniquindio/poo/finalproject/CartaEventoView.fxml"));

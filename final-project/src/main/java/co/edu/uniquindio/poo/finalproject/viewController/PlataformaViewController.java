@@ -49,6 +49,7 @@ public class PlataformaViewController extends ViewController{
     }
     @FXML
     public void showGestionUsuarios(ActionEvent event) {
+        crearVista("/co/edu/uniquindio/poo/finalproject/GestionUsuariosView.fxml","Gestion de usuarios",event);
     }
     @FXML
     public void gestionarEventos(ActionEvent event) {

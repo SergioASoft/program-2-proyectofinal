@@ -19,11 +19,11 @@ import java.util.List;
 
 public class CrearRecintoViewController extends ViewController {
 
-    @FXML private TextField txtIdRecinto, txtNombre, txtBusquedaRecinto;
+    @FXML private TextField txtIdRecinto, txtNombre, txtCiudad, txtDireccion, txtBusquedaRecinto;
     @FXML private TextField txtNombreZona, txtCapacidadZona, txtPrecioZona;
     @FXML private ComboBox<TipoZona> comboTipoZona;
     @FXML private TableView<Recinto> tablaRecintos;
-    @FXML private TableColumn<Recinto, String> colIdRecinto, colNombreRecinto;
+    @FXML private TableColumn<Recinto, String> colIdRecinto, colNombreRecinto, colCiudadRecinto;
     @FXML private TableView<Zona> tablaZonas;
     @FXML private TableColumn<Zona, String> colNombreZona, colTipoZona;
     @FXML private TableColumn<Zona, Integer> colCapacidadZona, colPrecioZona;
@@ -31,6 +31,7 @@ public class CrearRecintoViewController extends ViewController {
 
     private final ObservableList<Recinto> listaRecintosUI = FXCollections.observableArrayList();
     private final ObservableList<Zona> listaZonas = FXCollections.observableArrayList();
+    private Zona zonaSeleccionada;
     private Recinto recintoSeleccionado; // RASTREADOR DE EDICIÓN
 
     ControladorFacade controladorFacade = ControladorFacade.getInstance();
@@ -43,14 +44,16 @@ public class CrearRecintoViewController extends ViewController {
 
         colIdRecinto.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIdRecinto()));
         colNombreRecinto.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
+        colCiudadRecinto.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCiudad()));
         tablaRecintos.setItems(listaRecintosUI);
 
         colNombreZona.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIdZona()));
         colCapacidadZona.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCapacidad()));
-        colPrecioZona.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getAsientos().getFirst().getPrecio()));
+        colPrecioZona.setCellValueFactory(cellData -> new SimpleObjectProperty<>(obtenerPrecioZona(cellData.getValue())));
         colTipoZona.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTipoZona().toString()));
         tablaZonas.setItems(listaZonas);
 
+        txtBusquedaRecinto.textProperty().addListener((obs, oldValue, newValue) -> actualizarListaRecintos());
         actualizarListaRecintos();
 
         tablaRecintos.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -59,19 +62,23 @@ public class CrearRecintoViewController extends ViewController {
                 cargarDetallesRecinto(newSelection);
             }
         });
+        tablaZonas.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> cargarZonaSeleccionada(newSelection));
     }
 
     private void cargarDetallesRecinto(Recinto recinto) {
         txtIdRecinto.setText(recinto.getIdRecinto().replace("REC-", ""));
         txtIdRecinto.setEditable(false);
         txtNombre.setText(recinto.getNombre());
+        txtCiudad.setText(recinto.getCiudad());
+        txtDireccion.setText(recinto.getDireccion());
         listaZonas.setAll(new ArrayList<>(recinto.getZonas()));
         if(btnFinalizar != null) btnFinalizar.setText("ACTUALIZAR RECINTO");
     }
 
     @FXML
     void agregarRecinto(ActionEvent event) {
-        if (txtIdRecinto.getText().isEmpty() || txtNombre.getText().isEmpty()) {
+        if (txtIdRecinto.getText().isEmpty() || txtNombre.getText().isEmpty()
+                || txtCiudad.getText().isEmpty() || txtDireccion.getText().isEmpty()) {
             mostrarAlerta("Llene los datos del recinto");
             return;
         }
@@ -84,7 +91,8 @@ public class CrearRecintoViewController extends ViewController {
             controladorFacade.eliminarRecinto(recintoSeleccionado);
             recintoSeleccionado = null;
         }
-        Recinto nuevo = new Recinto("REC-" + txtIdRecinto.getText(), txtNombre.getText(), new ArrayList<>(listaZonas));
+        Recinto nuevo = new Recinto("REC-" + txtIdRecinto.getText(), txtNombre.getText(),
+                txtCiudad.getText(), txtDireccion.getText(), new ArrayList<>(listaZonas));
         controladorFacade.registrarRecinto(nuevo);
         actualizarListaRecintos();
         limpiarFormulario();
@@ -97,7 +105,7 @@ public class CrearRecintoViewController extends ViewController {
             int precio = Integer.parseInt(txtPrecioZona.getText());
             TipoZona tipo = comboTipoZona.getValue();
 
-            if (listaZonas.stream().anyMatch(z -> z.getTipoZona() == tipo)) {
+            if (listaZonas.stream().anyMatch(z -> z != zonaSeleccionada && z.getTipoZona() == tipo)) {
                 mostrarAlerta("Ya existe una zona de tipo " + tipo);
                 return;
             }
@@ -112,6 +120,10 @@ public class CrearRecintoViewController extends ViewController {
                     .reglas(tipo == TipoZona.VIP ? "Acceso exclusivo VIP" : "Sin restricciones")
                     .build();
 
+            if (zonaSeleccionada != null) {
+                listaZonas.remove(zonaSeleccionada);
+                zonaSeleccionada = null;
+            }
             listaZonas.add(nuevaZona);
             limpiarCamposZona();
         }
@@ -119,10 +131,8 @@ public class CrearRecintoViewController extends ViewController {
 
     @FXML
     void limpiarAlClickAfuera(MouseEvent event) {
-        if (!(event.getTarget() instanceof TableColumn || event.getTarget() instanceof TableView) && recintoSeleccionado!=null) {
-            limpiarFormulario();
-        }
     }
+
 
     @FXML
     void eliminarRecinto(ActionEvent event) {
@@ -139,11 +149,18 @@ public class CrearRecintoViewController extends ViewController {
         Zona seleccionada = tablaZonas.getSelectionModel().getSelectedItem();
         if (seleccionada != null) {
             listaZonas.remove(seleccionada);
+            limpiarCamposZona();
         }
     }
 
     private void actualizarListaRecintos() {
-        listaRecintosUI.setAll(controladorFacade.getTodosLosRecintos());
+        String busqueda = txtBusquedaRecinto == null || txtBusquedaRecinto.getText() == null ? "" : txtBusquedaRecinto.getText().toLowerCase();
+        listaRecintosUI.setAll(controladorFacade.getTodosLosRecintos().stream()
+                .filter(recinto -> busqueda.isBlank()
+                        || recinto.getIdRecinto().toLowerCase().contains(busqueda)
+                        || recinto.getNombre().toLowerCase().contains(busqueda)
+                        || recinto.getCiudad().toLowerCase().contains(busqueda))
+                .toList());
     }
 
     private void limpiarCamposZona() {
@@ -151,12 +168,16 @@ public class CrearRecintoViewController extends ViewController {
         txtCapacidadZona.clear();
         txtPrecioZona.clear();
         comboTipoZona.setValue(null);
+        zonaSeleccionada = null;
+        tablaZonas.getSelectionModel().clearSelection();
     }
 
     void limpiarFormulario() {
         txtIdRecinto.clear();
         txtIdRecinto.setEditable(true);
         txtNombre.clear();
+        txtCiudad.clear();
+        txtDireccion.clear();
         limpiarCamposZona();
         listaZonas.clear();
         recintoSeleccionado = null;
@@ -175,6 +196,24 @@ public class CrearRecintoViewController extends ViewController {
     private boolean validarCamposZona() {
         return !txtNombreZona.getText().isEmpty() && comboTipoZona.getValue() != null &&
                 !txtCapacidadZona.getText().isEmpty() && !txtPrecioZona.getText().isEmpty();
+    }
+
+    private void cargarZonaSeleccionada(Zona zona) {
+        if (zona == null) {
+            return;
+        }
+        zonaSeleccionada = zona;
+        txtNombreZona.setText(zona.getIdZona());
+        comboTipoZona.setValue(zona.getTipoZona());
+        txtCapacidadZona.setText(String.valueOf(zona.getCapacidad()));
+        txtPrecioZona.setText(String.valueOf(obtenerPrecioZona(zona)));
+    }
+
+    private int obtenerPrecioZona(Zona zona) {
+        if (zona.getAsientos() == null || zona.getAsientos().isEmpty()) {
+            return 0;
+        }
+        return zona.getAsientos().getFirst().getPrecio();
     }
 
     @FXML void regresar(ActionEvent event) {
