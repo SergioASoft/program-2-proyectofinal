@@ -6,49 +6,52 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="cardRoot" minHeight="220.0" minWidth="280.0" prefWidth="280.0" spacing="10" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #dfe6e9; -fx-border-width: 2; -fx-cursor: hand;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.finalproject.viewController.CartaEventoViewController">
-    <padding>
-        <Insets bottom="15" left="15" right="15" top="15" />
-    </padding>
+<VBox fx:id="cardRoot" minHeight="238.0" minWidth="292.0" prefWidth="292.0" spacing="12.0" styleClass="event-card" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.finalproject.viewController.CartaEventoViewController">
     <children>
-        <HBox alignment="TOP_RIGHT">
+        <Region styleClass="event-card-accent" />
+        <VBox spacing="12.0">
+            <padding>
+                <Insets bottom="18.0" left="18.0" right="18.0" top="8.0" />
+            </padding>
             <children>
-                <Label fx:id="lblEstado" style="-fx-background-color: #e1f5fe; -fx-text-fill: #0288d1; -fx-padding: 2 8; -fx-background-radius: 5; -fx-font-weight: bold; -fx-font-size: 10;" text="ESTADO" />
-            </children>
-        </HBox>
+                <HBox alignment="CENTER_LEFT">
+                    <children>
+                        <Label fx:id="lblId" styleClass="muted-label" text="ID: 000" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label fx:id="lblEstado" styleClass="status-pill" text="ESTADO" />
+                    </children>
+                </HBox>
 
-        <VBox spacing="2">
-            <children>
-                <Label fx:id="lblNombre" minHeight="45.0" prefWidth="250.0" style="-fx-font-weight: bold; -fx-font-size: 16; -fx-text-fill: #2d3436;" text="Nombre del Evento" wrapText="true" />
-                <Label fx:id="lblId" style="-fx-text-fill: #636e72; -fx-font-size: 11;" text="ID: 000" />
+                <VBox spacing="4.0">
+                    <children>
+                        <Label fx:id="lblNombre" minHeight="48.0" prefWidth="250.0" style="-fx-font-size: 17px; -fx-font-weight: bold; -fx-text-fill: -fx-text-title;" text="Nombre del Evento" wrapText="true" />
+                        <Label fx:id="lblCategoria" styleClass="eyebrow-label" text="Categoria" />
+                    </children>
+                </VBox>
+
+                <Separator />
+
+                <GridPane hgap="10.0" vgap="9.0">
+                    <columnConstraints>
+                        <ColumnConstraints maxWidth="78.0" minWidth="78.0" prefWidth="78.0" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="150.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints />
+                    </rowConstraints>
+                    <children>
+                        <Label styleClass="info-label" text="Lugar" />
+                        <Label fx:id="lblLugar" style="-fx-text-fill: -fx-text-title;" text="Lugar del evento" wrapText="true" GridPane.columnIndex="1" />
+                        <Label styleClass="info-label" text="Fecha" GridPane.rowIndex="1" />
+                        <Label fx:id="lblFecha" style="-fx-text-fill: -fx-text-title;" text="Fecha" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    </children>
+                </GridPane>
             </children>
         </VBox>
-
-        <Separator style="-fx-opacity: 0.5;" />
-
-        <GridPane vgap="8">
-            <columnConstraints>
-                <ColumnConstraints maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
-                <ColumnConstraints hgrow="ALWAYS" minWidth="100.0" />
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            </rowConstraints>
-            <children>
-                <Label style="-fx-font-size: 16;" text="&#128205;" GridPane.columnIndex="0" />
-                <Label fx:id="lblLugar" style="-fx-font-size: 12; -fx-text-fill: #2d3436;" text="Lugar del evento" wrapText="true" GridPane.columnIndex="1" />
-
-                <Label style="-fx-font-size: 16;" text="&#128197;" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-                <Label fx:id="lblFecha" style="-fx-font-size: 12; -fx-text-fill: #2d3436;" text="Fecha" GridPane.rowIndex="1" GridPane.columnIndex="1" />
-
-                <Label style="-fx-font-size: 16;" text="&#127915;" GridPane.rowIndex="2" GridPane.columnIndex="0" />
-                <Label fx:id="lblCategoria" style="-fx-font-size: 12; -fx-text-fill: #2d3436;" text="Categoría" GridPane.rowIndex="2" GridPane.columnIndex="1" />
-            </children>
-        </GridPane>
     </children>
 </VBox>

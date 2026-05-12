@@ -20,83 +20,127 @@
 
 <BorderPane prefHeight="720.0" prefWidth="1280.0" styleClass="main-container" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.finalproject.viewController.PanelMetricasViewController">
     <top>
-        <HBox alignment="CENTER_LEFT" spacing="20" styleClass="login-card">
-            <padding><Insets bottom="15" left="25" right="25" top="15" /></padding>
+        <VBox spacing="14.0" styleClass="toolbar-card">
+            <padding>
+                <Insets bottom="18.0" left="28.0" right="28.0" top="18.0" />
+            </padding>
             <children>
-                <VBox>
-                    <Label style="-fx-text-fill: black;" styleClass="header-label" text="Panel de Metricas" />
-                    <Label style="-fx-text-fill: black;" styleClass="secondary-label" text="Ventas, ocupacion, servicios, cancelacion y top eventos" />
-                </VBox>
-                <Region HBox.hgrow="ALWAYS" />
-                <ComboBox fx:id="comboReporte" prefWidth="230.0" promptText="Reporte" />
-                <Button onAction="#exportarCsv" styleClass="primary-button" text="CSV" />
-                <Button onAction="#exportarPdf" styleClass="primary-button" text="PDF" />
-                <Button onAction="#refrescar" styleClass="link-button" text="Refrescar" />
-                <Button onAction="#regresar" styleClass="link-button" text="Volver" />
-            </children>
-            <BorderPane.margin><Insets bottom="10" left="15" right="15" top="15" /></BorderPane.margin>
-        </HBox>
-    </top>
-    <center>
-        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
-            <content>
-                <GridPane hgap="15" vgap="15">
-                    <padding><Insets bottom="15" left="15" right="15" top="5" /></padding>
+                <HBox alignment="CENTER_LEFT" spacing="18.0">
                     <children>
-                        <VBox spacing="8" styleClass="login-card">
-                            <padding><Insets bottom="15" left="15" right="15" top="15" /></padding>
-                            <children>
-                                <Label style="-fx-text-fill: black;" styleClass="section-header-label" text="VENTAS POR PERIODO" />
-                                <LineChart fx:id="chartVentas" prefHeight="260.0">
-                                    <xAxis><CategoryAxis label="Fecha" tickLabelFill="BLACK" /></xAxis>
-                                    <yAxis><NumberAxis label="Ingresos" tickLabelFill="BLACK" /></yAxis>
-                                </LineChart>
-                            </children>
+                        <VBox spacing="4.0">
+                            <Label styleClass="eyebrow-label" text="ANALITICA OPERATIVA" />
+                            <Label styleClass="header-label" text="Panel de metricas" />
+                            <Label styleClass="secondary-label" text="Ventas, ocupacion, servicios, cancelacion y top eventos calculados por el sistema." />
                         </VBox>
-                        <VBox spacing="8" styleClass="login-card" GridPane.columnIndex="1">
-                            <padding><Insets bottom="15" left="15" right="15" top="15" /></padding>
-                            <children>
-                                <Label style="-fx-text-fill: black;" styleClass="section-header-label" text="OCUPACION POR ZONA" />
-                                <BarChart fx:id="chartOcupacion" prefHeight="260.0">
-                                    <xAxis><CategoryAxis label="Zona" tickLabelFill="BLACK" /></xAxis>
-                                    <yAxis><NumberAxis label="Porcentaje" tickLabelFill="BLACK" /></yAxis>
-                                </BarChart>
-                            </children>
-                        </VBox>
-                        <VBox spacing="8" styleClass="login-card" GridPane.rowIndex="1">
-                            <padding><Insets bottom="15" left="15" right="15" top="15" /></padding>
-                            <children>
-                                <Label style="-fx-text-fill: black;" styleClass="section-header-label" text="INGRESOS POR SERVICIOS" />
-                                <PieChart fx:id="chartServicios" prefHeight="260.0" />
-                            </children>
-                        </VBox>
-                        <VBox spacing="8" styleClass="login-card" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                            <padding><Insets bottom="15" left="15" right="15" top="15" /></padding>
-                            <children>
-                                <Label fx:id="lblTasaCancelacion" style="-fx-text-fill: black;" styleClass="section-header-label" text="TASA DE CANCELACION" />
-                                <PieChart fx:id="chartCancelacion" prefHeight="260.0" />
-                            </children>
-                        </VBox>
-                        <VBox spacing="8" styleClass="login-card" GridPane.columnSpan="2" GridPane.rowIndex="2">
-                            <padding><Insets bottom="15" left="15" right="15" top="15" /></padding>
-                            <children>
-                                <Label style="-fx-text-fill: black;" styleClass="section-header-label" text="TOP EVENTOS" />
-                                <BarChart fx:id="chartTopEventos" prefHeight="260.0">
-                                    <xAxis><CategoryAxis label="Evento" tickLabelFill="BLACK" /></xAxis>
-                                    <yAxis><NumberAxis label="Compras" tickLabelFill="BLACK" /></yAxis>
-                                </BarChart>
-                            </children>
-                        </VBox>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <ComboBox fx:id="comboReporte" prefWidth="240.0" promptText="Reporte" styleClass="text-field" />
+                        <Button onAction="#exportarCsv" prefHeight="40.0" styleClass="outline-button" text="CSV" />
+                        <Button onAction="#exportarPdf" prefHeight="40.0" styleClass="outline-button" text="PDF" />
+                        <Button onAction="#refrescar" prefHeight="40.0" styleClass="primary-button" text="Refrescar" />
+                        <Button onAction="#regresar" prefHeight="40.0" styleClass="link-button" text="Volver" />
                     </children>
+                </HBox>
+            </children>
+            <BorderPane.margin>
+                <Insets bottom="10.0" left="16.0" right="16.0" top="16.0" />
+            </BorderPane.margin>
+        </VBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true">
+            <content>
+                <GridPane hgap="16.0" vgap="16.0">
+                    <padding>
+                        <Insets bottom="18.0" left="16.0" right="16.0" top="6.0" />
+                    </padding>
                     <columnConstraints>
-                        <ColumnConstraints />
-                        <ColumnConstraints />
+                        <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
+                        <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints />
                         <RowConstraints />
                         <RowConstraints />
                     </rowConstraints>
+                    <children>
+                        <VBox spacing="10.0" styleClass="chart-card">
+                            <padding>
+                                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+                            </padding>
+                            <children>
+                                <Label styleClass="section-header-label" text="VENTAS POR PERIODO" />
+                                <LineChart fx:id="chartVentas" animated="false" createSymbols="true" legendVisible="false" prefHeight="280.0" VBox.vgrow="ALWAYS">
+                                    <xAxis>
+                                        <CategoryAxis label="Fecha" />
+                                    </xAxis>
+                                    <yAxis>
+                                        <NumberAxis label="Ingresos" />
+                                    </yAxis>
+                                </LineChart>
+                            </children>
+                        </VBox>
+
+                        <VBox spacing="10.0" styleClass="chart-card" GridPane.columnIndex="1">
+                            <padding>
+                                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+                            </padding>
+                            <children>
+                                <Label styleClass="section-header-label" text="OCUPACION POR ZONA" />
+                                <BarChart fx:id="chartOcupacion" animated="false" legendVisible="false" prefHeight="280.0" VBox.vgrow="ALWAYS">
+                                    <xAxis>
+                                        <CategoryAxis label="Zona" />
+                                    </xAxis>
+                                    <yAxis>
+                                        <NumberAxis label="Porcentaje" />
+                                    </yAxis>
+                                </BarChart>
+                            </children>
+                        </VBox>
+
+                        <VBox spacing="10.0" styleClass="chart-card" GridPane.rowIndex="1">
+                            <padding>
+                                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+                            </padding>
+                            <children>
+                                <Label styleClass="section-header-label" text="INGRESOS POR SERVICIOS" />
+                                <PieChart fx:id="chartServicios" legendSide="RIGHT" prefHeight="280.0" VBox.vgrow="ALWAYS" />
+                            </children>
+                        </VBox>
+
+                        <VBox spacing="10.0" styleClass="chart-card" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <padding>
+                                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+                            </padding>
+                            <children>
+                                <Label fx:id="lblTasaCancelacion" styleClass="section-header-label" text="TASA DE CANCELACION" />
+                                <PieChart fx:id="chartCancelacion" legendSide="RIGHT" prefHeight="280.0" VBox.vgrow="ALWAYS" />
+                            </children>
+                        </VBox>
+
+                        <VBox spacing="10.0" styleClass="chart-card" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                            <padding>
+                                <Insets bottom="18.0" left="18.0" right="18.0" top="18.0" />
+                            </padding>
+                            <children>
+                                <HBox alignment="CENTER_LEFT">
+                                    <children>
+                                        <Label styleClass="section-header-label" text="TOP EVENTOS" />
+                                        <Region HBox.hgrow="ALWAYS" />
+                                        <Label styleClass="muted-label" text="Compras agrupadas por evento" />
+                                    </children>
+                                </HBox>
+                                <BarChart fx:id="chartTopEventos" animated="false" legendVisible="false" prefHeight="300.0" VBox.vgrow="ALWAYS">
+                                    <xAxis>
+                                        <CategoryAxis label="Evento" />
+                                    </xAxis>
+                                    <yAxis>
+                                        <NumberAxis label="Compras" />
+                                    </yAxis>
+                                </BarChart>
+                            </children>
+                        </VBox>
+                    </children>
                 </GridPane>
             </content>
         </ScrollPane>

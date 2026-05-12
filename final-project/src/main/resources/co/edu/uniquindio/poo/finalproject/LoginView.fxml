@@ -1,33 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="main-container" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.finalproject.viewController.LoginViewController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="main-container" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.finalproject.viewController.LoginViewController">
     <children>
-        <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <VBox alignment="CENTER" maxHeight="450.0" maxWidth="400.0" spacing="25.0" styleClass="login-card">
-                    <padding><Insets bottom="40" left="45" right="45" top="40" /></padding>
+                <VBox alignment="CENTER_LEFT" prefWidth="560.0" spacing="28.0" styleClass="login-hero">
+                    <padding>
+                        <Insets bottom="60.0" left="70.0" right="60.0" top="60.0" />
+                    </padding>
                     <children>
-                        <VBox alignment="CENTER" spacing="5">
-                            <!-- Usando la nueva clase -->
-                            <Label text="BIENVENIDO" styleClass="header-label" />
-                            <Label text="Ingresa tus credenciales" styleClass="secondary-label" />
+                        <Region VBox.vgrow="ALWAYS" />
+                        <VBox spacing="12.0">
+                            <Label styleClass="hero-title" text="CENTENARIO" />
+                            <Label maxWidth="420.0" styleClass="hero-subtitle" text="Gestion integral de eventos, compras, recintos y metricas operativas." wrapText="true" />
                         </VBox>
-
-                        <VBox spacing="15">
-                            <TextField fx:id="txtUser" promptText="Usuario" prefHeight="45.0" styleClass="text-field" />
-                            <PasswordField fx:id="txtPassword" promptText="Contraseña" prefHeight="45.0" styleClass="text-field" />
+                        <VBox maxWidth="390.0" spacing="12.0" styleClass="login-side-panel">
+                            <padding>
+                                <Insets bottom="22.0" left="22.0" right="22.0" top="22.0" />
+                            </padding>
+                            <children>
+                                <Label style="-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;" text="Plataforma academica" />
+                                <Label style="-fx-text-fill: #dbe9f5;" text="Acceso para clientes y administradores registrados en el sistema." wrapText="true" />
+                            </children>
                         </VBox>
-
-                        <Button onAction="#iniciarSesion" maxWidth="Infinity" prefHeight="50.0" styleClass="primary-button" text="INICIAR SESIÓN" />
-
-                        <!-- Usando la nueva clase link-button -->
-                        <Button onAction="#cargarMenuRegistro" styleClass="link-button" text="¿No tienes cuenta? Regístrate" />
+                        <Region VBox.vgrow="ALWAYS" />
                     </children>
                 </VBox>
+
+                <StackPane HBox.hgrow="ALWAYS">
+                    <children>
+                        <VBox alignment="CENTER_LEFT" maxHeight="430.0" maxWidth="430.0" spacing="24.0" styleClass="login-card">
+                            <padding>
+                                <Insets bottom="42.0" left="44.0" right="44.0" top="42.0" />
+                            </padding>
+                            <children>
+                                <VBox spacing="6.0">
+                                    <Label styleClass="eyebrow-label" text="INICIO DE SESION" />
+                                    <Label styleClass="header-label" text="Bienvenido" />
+                                    <Label styleClass="secondary-label" text="Ingresa tus credenciales para continuar." />
+                                </VBox>
+
+                                <VBox spacing="14.0">
+                                    <TextField fx:id="txtUser" prefHeight="42.0" promptText="Usuario" styleClass="text-field" />
+                                    <PasswordField fx:id="txtPassword" prefHeight="42.0" promptText="Contrasena" styleClass="text-field" />
+                                </VBox>
+
+                                <Button maxWidth="Infinity" onAction="#iniciarSesion" prefHeight="48.0" styleClass="primary-button" text="INICIAR SESION" />
+                                <Button alignment="CENTER" maxWidth="Infinity" onAction="#cargarMenuRegistro" styleClass="link-button" text="No tienes cuenta? Registrate" />
+                            </children>
+                        </VBox>
+                    </children>
+                </StackPane>
             </children>
-        </StackPane>
+        </HBox>
     </children>
 </AnchorPane>

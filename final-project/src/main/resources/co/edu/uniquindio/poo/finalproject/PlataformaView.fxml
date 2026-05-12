@@ -5,6 +5,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
@@ -12,27 +14,28 @@
 
 <BorderPane prefHeight="720.0" prefWidth="1280.0" styleClass="main-container" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.finalproject.viewController.PlataformaViewController">
     <left>
-        <VBox prefWidth="280" spacing="5" styleClass="sidebar">
-            <padding><Insets bottom="20" left="15" right="15" top="40" /></padding>
+        <VBox prefWidth="292.0" spacing="8.0" styleClass="sidebar">
+            <padding>
+                <Insets bottom="22.0" left="18.0" right="18.0" top="34.0" />
+            </padding>
             <children>
-                <HBox alignment="CENTER_LEFT" spacing="10">
-                    <padding><Insets bottom="20" left="10" /></padding>
-                    <children>
-                        <VBox>
-                            <Label styleClass="sidebar-brand" text="CENTENARIO" />
-                            <Label styleClass="sidebar-brand-subtitle" text="Software de Gestion" />
-                        </VBox>
-                    </children>
-                </HBox>
+                <VBox spacing="4.0">
+                    <Label styleClass="sidebar-brand" text="CENTENARIO" />
+                    <Label styleClass="sidebar-brand-subtitle" text="Software de Gestion" />
+                </VBox>
 
                 <Separator styleClass="sidebar-separator">
-                    <VBox.margin><Insets bottom="20" top="10" /></VBox.margin>
+                    <VBox.margin>
+                        <Insets bottom="16.0" top="16.0" />
+                    </VBox.margin>
                 </Separator>
 
-                <VBox fx:id="clientPanel" spacing="5.0">
+                <VBox fx:id="clientPanel" spacing="6.0">
                     <children>
                         <Label styleClass="menu-section-label" text="MODULO CLIENTE">
-                            <VBox.margin><Insets left="10" /></VBox.margin>
+                            <VBox.margin>
+                                <Insets bottom="4.0" left="8.0" />
+                            </VBox.margin>
                         </Label>
                         <Button maxWidth="Infinity" onAction="#gestionarPerfil" styleClass="menu-button" text="Gestionar perfil" />
                         <Button maxWidth="Infinity" onAction="#showExplorarEventos" styleClass="menu-button" text="Explorar eventos" />
@@ -40,10 +43,12 @@
                     </children>
                 </VBox>
 
-                <VBox fx:id="adminPanel" managed="true" spacing="5" visible="true">
+                <VBox fx:id="adminPanel" managed="true" spacing="6.0" visible="true">
                     <children>
                         <Label styleClass="menu-section-label" text="SISTEMA ADMINISTRATIVO">
-                            <VBox.margin><Insets bottom="5" left="10" /></VBox.margin>
+                            <VBox.margin>
+                                <Insets bottom="4.0" left="8.0" top="12.0" />
+                            </VBox.margin>
                         </Label>
                         <Button maxWidth="Infinity" onAction="#showGestionUsuarios" styleClass="menu-button" text="Gestionar usuarios" />
                         <Button maxWidth="Infinity" onAction="#gestionarEventos" styleClass="menu-button" text="Gestionar eventos" />
@@ -56,37 +61,76 @@
                 </VBox>
 
                 <Region VBox.vgrow="ALWAYS" />
-
-                <Separator styleClass="sidebar-separator">
-                    <VBox.margin><Insets bottom="15" /></VBox.margin>
-                </Separator>
-
+                <Separator styleClass="sidebar-separator" />
                 <Button maxWidth="Infinity" onAction="#cerrarSesion" styleClass="logout-button" text="CERRAR SESION" />
             </children>
         </VBox>
     </left>
 
     <center>
-        <StackPane fx:id="contentArea" style="-fx-background-color: transparent;">
+        <StackPane fx:id="contentArea">
+            <padding>
+                <Insets bottom="28.0" left="32.0" right="32.0" top="28.0" />
+            </padding>
             <children>
-                <VBox alignment="CENTER" spacing="20">
+                <VBox spacing="22.0">
                     <children>
-                        <VBox alignment="CENTER" spacing="5">
-                            <Label styleClass="welcome-title" text="Panel de Control" />
-                            <Label styleClass="welcome-subtitle" text="Sistema Integral del Estadio Centenario" />
+                        <VBox spacing="16.0" styleClass="dashboard-hero">
+                            <padding>
+                                <Insets bottom="34.0" left="36.0" right="36.0" top="34.0" />
+                            </padding>
+                            <children>
+                                <Label styleClass="eyebrow-label" text="PANEL PRINCIPAL" />
+                                <Label styleClass="welcome-title" text="Gestion del Estadio Centenario" />
+                                <Label maxWidth="650.0" styleClass="welcome-subtitle" text="Accede a las vistas disponibles desde el menu lateral. La interfaz conserva los modulos existentes de usuarios, eventos, recintos, compras, incidencias y metricas." wrapText="true" />
+                            </children>
                         </VBox>
 
-                        <HBox alignment="CENTER" spacing="20">
-                            <VBox alignment="CENTER" styleClass="metric-card">
-                                <Label styleClass="metric-label" text="Eventos activos" />
-                                <Label styleClass="metric-value-primary" text="12" />
-                            </VBox>
+                        <GridPane hgap="18.0" vgap="18.0">
+                            <columnConstraints>
+                                <ColumnConstraints percentWidth="33.3" />
+                                <ColumnConstraints percentWidth="33.3" />
+                                <ColumnConstraints percentWidth="33.3" />
+                            </columnConstraints>
+                            <children>
+                                <VBox spacing="8.0" styleClass="dashboard-action-card">
+                                    <children>
+                                        <Label styleClass="section-header-label" text="CLIENTES" />
+                                        <Label styleClass="secondary-label" text="Perfil, exploracion de eventos e historial de compras." wrapText="true" />
+                                    </children>
+                                </VBox>
+                                <VBox spacing="8.0" styleClass="dashboard-action-card" GridPane.columnIndex="1">
+                                    <children>
+                                        <Label styleClass="section-header-label" text="ADMINISTRACION" />
+                                        <Label styleClass="secondary-label" text="Gestion de usuarios, recintos, eventos, asientos y compras." wrapText="true" />
+                                    </children>
+                                </VBox>
+                                <VBox spacing="8.0" styleClass="dashboard-action-card" GridPane.columnIndex="2">
+                                    <children>
+                                        <Label styleClass="section-header-label" text="OPERACION" />
+                                        <Label styleClass="secondary-label" text="Incidencias y panel de metricas con reportes CSV/PDF." wrapText="true" />
+                                    </children>
+                                </VBox>
+                            </children>
+                        </GridPane>
 
-                            <VBox alignment="CENTER" styleClass="metric-card">
-                                <Label styleClass="metric-label" text="Ventas de hoy" />
-                                <Label styleClass="metric-value-success" text="84" />
-                            </VBox>
-                        </HBox>
+                        <VBox spacing="12.0" styleClass="flat-card">
+                            <padding>
+                                <Insets bottom="22.0" left="24.0" right="24.0" top="22.0" />
+                            </padding>
+                            <children>
+                                <Label styleClass="section-header-label" text="FLUJO DE TRABAJO" />
+                                <HBox spacing="14.0">
+                                    <children>
+                                        <Label styleClass="status-pill" text="Eventos" />
+                                        <Label styleClass="status-pill" text="Compras" />
+                                        <Label styleClass="status-pill" text="Asientos" />
+                                        <Label styleClass="status-pill" text="Metricas" />
+                                        <Label styleClass="status-pill" text="Reportes" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
                     </children>
                 </VBox>
             </children>
